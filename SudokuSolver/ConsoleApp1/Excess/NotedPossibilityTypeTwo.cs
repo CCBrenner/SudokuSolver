@@ -19,17 +19,17 @@ public class PositivePencilMarkingTypeTwo
                 Cell.EliminatePossibility(i);
     }
 
-    public bool EliminatePossibility(int pencilMarking)
+    public bool EliminatePossibility(int candidate)
     {
-        Cell.EliminatePossibility(pencilMarking);
-        return UpdateIfIsExpired(pencilMarking);
+        Cell.EliminatePossibility(candidate);
+        return UpdateIfIsExpired(candidate);
     }
 
-    private bool UpdateIfIsExpired(int pencilMarking)
+    private bool UpdateIfIsExpired(int candidate)
     {
         foreach (var value in Pair)
         {
-            if (value == pencilMarking)
+            if (value == candidate)
             {
                 IsExpired = true;
                 return true;

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\local_console_projects\\SudokuSolverVersions\\version_2_brute_force\\SudokuSolver\\SolverTests\\SolverTests.csproj": {}
+    "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\local_console_projects\\SudokuSolver_bruteforce\\SolverTests\\SolverTests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\local_console_projects\\SudokuSolverVersions\\version_2_brute_force\\SudokuSolver\\ConsoleApp1\\SudokuSolver.csproj": {
+    "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\local_console_projects\\SudokuSolver_bruteforce\\ConsoleApp1\\SudokuSolver.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\local_console_projects\\SudokuSolverVersions\\version_2_brute_force\\SudokuSolver\\ConsoleApp1\\SudokuSolver.csproj",
+        "projectUniqueName": "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\local_console_projects\\SudokuSolver_bruteforce\\ConsoleApp1\\SudokuSolver.csproj",
         "projectName": "SudokuSolver",
-        "projectPath": "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\local_console_projects\\SudokuSolverVersions\\version_2_brute_force\\SudokuSolver\\ConsoleApp1\\SudokuSolver.csproj",
+        "projectPath": "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\local_console_projects\\SudokuSolver_bruteforce\\ConsoleApp1\\SudokuSolver.csproj",
         "packagesPath": "C:\\Users\\Collyn B - VotP\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\local_console_projects\\SudokuSolverVersions\\version_2_brute_force\\SudokuSolver\\ConsoleApp1\\obj\\",
+        "outputPath": "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\local_console_projects\\SudokuSolver_bruteforce\\ConsoleApp1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Collyn B - VotP\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -59,14 +59,14 @@
         }
       }
     },
-    "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\local_console_projects\\SudokuSolverVersions\\version_2_brute_force\\SudokuSolver\\SolverTests\\SolverTests.csproj": {
+    "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\local_console_projects\\SudokuSolver_bruteforce\\SolverTests\\SolverTests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\local_console_projects\\SudokuSolverVersions\\version_2_brute_force\\SudokuSolver\\SolverTests\\SolverTests.csproj",
+        "projectUniqueName": "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\local_console_projects\\SudokuSolver_bruteforce\\SolverTests\\SolverTests.csproj",
         "projectName": "SolverTests",
-        "projectPath": "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\local_console_projects\\SudokuSolverVersions\\version_2_brute_force\\SudokuSolver\\SolverTests\\SolverTests.csproj",
+        "projectPath": "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\local_console_projects\\SudokuSolver_bruteforce\\SolverTests\\SolverTests.csproj",
         "packagesPath": "C:\\Users\\Collyn B - VotP\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\local_console_projects\\SudokuSolverVersions\\version_2_brute_force\\SudokuSolver\\SolverTests\\obj\\",
+        "outputPath": "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\local_console_projects\\SudokuSolver_bruteforce\\SolverTests\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Collyn B - VotP\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -83,8 +83,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\local_console_projects\\SudokuSolverVersions\\version_2_brute_force\\SudokuSolver\\ConsoleApp1\\SudokuSolver.csproj": {
-                "projectPath": "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\local_console_projects\\SudokuSolverVersions\\version_2_brute_force\\SudokuSolver\\ConsoleApp1\\SudokuSolver.csproj"
+              "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\local_console_projects\\SudokuSolver_bruteforce\\ConsoleApp1\\SudokuSolver.csproj": {
+                "projectPath": "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\local_console_projects\\SudokuSolver_bruteforce\\ConsoleApp1\\SudokuSolver.csproj"
               }
             }
           }

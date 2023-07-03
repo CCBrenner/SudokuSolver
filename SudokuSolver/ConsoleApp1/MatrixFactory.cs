@@ -37,4 +37,18 @@ public static class MatrixFactory
             { 0, 0, 0,   0, 0, 0,   0, 0, 0 },
         };
     }
+    public static Cell[,] CreateMatrix(int[,] puzzleData)
+    {
+        Cell[,] matrix = new Cell[9, 9];
+
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 9; j++)
+            {
+                matrix[i, j] = new Cell(i + 1, j + 1, puzzleData[i, j]);
+            }
+        }
+
+        return matrix;
+    }
 }

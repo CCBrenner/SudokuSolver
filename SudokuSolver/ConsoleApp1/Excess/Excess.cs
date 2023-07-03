@@ -1,4 +1,42 @@
-﻿/*  Originally taken from "puzzle.ApplyAllThreeDisctinctionRulesToEliminatePossibilitiesForEachCell()"
+﻿
+
+
+// Configure puzzle
+// enter lines in CSV format, one line at a time
+/*
+Console.WriteLine("Enter lines:");
+Console.WriteLine();
+*/
+
+
+
+
+// Ways to find a new block:
+
+// Find in row or column
+
+
+
+// 81 cells
+// 24 given to start on average (sample size of 1)
+
+
+// How I solve:
+// What I write down: When there are two candidates based on a certain check
+// What this implies: each cell will need a record of high probability values (50/50 probabilty is the best) - what is the best way to store this data for procedure? Could use multiple data representations. Possibly running answer, and a second  
+
+
+// Easy ways to get numbers
+// If there is only one space left in a row or column or block (repeat this first for every row/column/block every time a new number is found)
+// If there are only two spaces left (use different checks to see if you can find one or the other cell, leaveing the other cell only one candidate)
+
+
+// Error handling:
+// If the program finds that it has either (1) done something it should not hve been able to do, or (2) cannot do anything more based on its programmed rules,
+// then quite with the type of error rovided and how much it was able to figure out at the time of the error. 
+
+
+/*  Originally taken from "puzzle.ApplyAllThreeDisctinctionRulesToEliminatePossibilitiesForEachCell()"
 foreach (var cell in Matrix)
 {
     // get values in row
@@ -7,11 +45,11 @@ foreach (var cell in Matrix)
     int[] colValues = GetColumnValues(cell);
     // get values in block
     int[,] blockValues = GetBlockValues(cell);
-    // consolidate set of pencilMarkings for removal
+    // consolidate set of candidates for removal
     SortedSet<int> nonPossibilities = GenerateNonPossibilites(rowValues, colValues, blockValues);
-    // remove pencilMarkings from cell
+    // remove candidates from cell
     cell.RemovePossibilitiesFromCell(nonPossibilities);
-    // Update cell value if only one pencilMarking; throw exception if there are no more pencilMarkings
+    // Update cell value if only one candidate; throw exception if there are no more candidates
     int updatedCellValue = cell.CheckAndUpdateValueIfOnePossibilityRemaining();
     // update value of cell if expected value is not a possible value (update to what?)
     // NEED METHOD HERE.
@@ -32,11 +70,11 @@ while (true)
         int[] colValues = GetColumnValues(cell);
         // get values in block
         int[,] blockValues = GetBlockValues(cell);
-        // consolidate set of pencilMarkings for removal
+        // consolidate set of candidates for removal
         SortedSet<int> nonPossibilities = GenerateNonPossibilites(rowValues, colValues, blockValues);
-        // remove pencilMarkings from cell
+        // remove candidates from cell
         cell.RemovePossibilitiesFromCell(nonPossibilities);
-        // Update cell value if only one pencilMarking; throw exception if there are no more pencilMarkings
+        // Update cell value if only one candidate; throw exception if there are no more candidates
         int updatedCellValue = cell.CheckAndUpdateValueIfOnePossibilityRemaining();
         // update value of cell if expected value is not a possible value (update to what?)
         // NEED METHOD HERE.
@@ -105,3 +143,62 @@ private bool ConfirmIfSharesSecondPositivePencilMarking(Cell otherCell)
                 return true;
     return false;
 }*/
+
+
+/* From Block:
+public static void EliminateCandidatesByNumber(Block[] blocks)
+{
+    foreach (var block in blocks)
+    {
+        if (block is not null)
+        {
+            block.EliminateCandidatesByNumber();
+        }
+    }
+}
+private void EliminateCandidatesByNumber()
+{
+    for (int i = 1; i < 10; i++)
+    {
+        EliminateCandidatesByNumberByNeighboringBlocks(i);
+    }
+}
+
+private void EliminateCandidatesByNumberByNeighboringBlocks(int number)
+{
+    // how many neighboring blocks is number in?
+    List<Cell> relevantConfirmedCells = new();
+
+    foreach (var block in BlockNeighbors)
+    {
+        Cell? confirmedCell = block.NumberIsConfirmed(number);
+
+        if (confirmedCell is not null)
+        {
+            relevantConfirmedCells.Add(confirmedCell);
+        }
+    }
+
+    if (relevantConfirmedCells.Count == 4)
+    {
+        Cell cellHavingDiscoveredValue = DeduceCellValueByNumberByNotTwoRowsAndNotTwoColumns(relevantConfirmedCells);
+        cellHavingDiscoveredValue.AssignConfirmedValue(number);
+    }
+    else if (relevantConfirmedCells.Count == 3)
+    {
+
+    }
+    else if (relevantConfirmedCells.Count == 2)
+    {
+
+    }
+    else if (relevantConfirmedCells.Count == 1)
+    {
+
+    }
+    else
+    {
+
+    }
+}
+*/

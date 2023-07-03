@@ -1,37 +1,177 @@
 ﻿namespace SudokuSolver;
 
-public class Row
+public class Row : CellAggregate
 {
     public Row(int id)
     {
-        Cells = new Cell[10];
         Id = id;
     }
 
     public int Id { get; }
-    public Cell[] Cells { get; private set; }  // [0] is not used
-    public List<int> MissingValues => GetMissingValues();
+    public Cell? Cell(int position) => Cells.FirstOrDefault(y => y.PosInRow == position);
+    public bool IsSolvableBasedOnCandidatesOfRow => GetIsSolvableBasedOnCandidates(Cells.ToList());
 
-
-    public void AddCellReference(Cell cell)
+    public static Row[] CreateArrayFromCellReferences(List<Cell> cells)
     {
-        if (cell.Row == Id)
+        Row[] rows = new Row[10]
         {
-            Cells[cell.Column] = cell;
-        }
-    }
-    private List<int> GetMissingValues()
-    {
-        int[] missingValues = new int[10] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+            new Row(0),
+            new Row(1),
+            new Row(2),
+            new Row(3),
+            new Row(4),
+            new Row(5),
+            new Row(6),
+            new Row(7),
+            new Row(8),
+            new Row(9),
+        };
 
-        for (int i = 1; i < 10; i++)
+        foreach (var cell in cells)
         {
-            if (Cells[i] is not null)
+            if (cell is not null)
             {
-                missingValues[Cells[i].Values[0]] = 0;
+                rows[cell.RowId].AddCellReference(cell);
             }
         }
 
-        return missingValues.ToList();
+        return rows;
+    }
+    public void AssignRowReferenceToCells()
+    {
+        foreach (var cell in Cells)
+        {
+            if (cell is not null)
+            {
+                cell.AssignRowReference(this);
+            }
+        }
+    }
+
+    public void AddCellReference(Cell cell)
+    {
+        if (cell.RowId == Id)
+        {
+            Cells[cell.ColumnId] = cell;
+        }
+    }
+
+    public static void AssignRowReferenceToCellsPerRow(Row[] rows)
+    {
+        foreach (var row in rows)
+        {
+            row.AssignRowReferenceToCells();
+        }
+    }
+    public static void AssignRowReferenceToCellsPerRow(List<Row> rows)
+    {
+        foreach (var row in rows)
+        {
+            row.AssignRowReferenceToCells();
+        }
+    }
+
+    public static void EliminateCandidatesByDistinctInNeighborhood(Row[] rows)
+    {
+        foreach (var row in rows)
+        {
+            row.EliminateCandidates();
+        }
+    }
+    public static void EliminateCandidatesByDistinctInNeighborhood(List<Row> rows)
+    {
+        foreach (var row in rows)
+        {
+            row.EliminateCandidates();
+        }
+    }
+
+    private void EliminateCandidates()
+    {
+        // Get Given, and Confirmed numbers of row
+        SortedSet<int> candidatesToEliminate = GetCandidatesToEliminate();
+
+        // Eliminate candidates of cells in the row
+        EliminateCandidatesFromCellsOfRow(candidatesToEliminate);
+    }
+
+    private void EliminateCandidatesFromCellsOfRow(SortedSet<int> candidatesToEliminate)
+    {
+        foreach (var candidate in candidatesToEliminate)
+        {
+            foreach (var cell in Cells)
+            {
+                if (cell is not null)
+                {
+                    cell.EliminateCandidate(candidate);
+                }
+            }
+        }
+    }
+
+    private SortedSet<int> GetCandidatesToEliminate()
+    {
+        // Go through each cell in the row & if they have any of the flags marked as true, add them to the SortedSet.
+        SortedSet<int> rowCandidatesToEliminate = new();
+
+        foreach (var cell in Cells)
+        {
+            if (cell is not null)
+            {
+                if (cell.ValueStatus == ValueStatus.Given || cell.ValueStatus == ValueStatus.Confirmed)
+                {
+                    int possiblityToEliminate = cell.Values[0];
+                    rowCandidatesToEliminate.Add(possiblityToEliminate);
+                }
+            }
+        }
+
+        return rowCandidatesToEliminate;
+    }
+
+    public static bool IsSolvableBasedOnCandidates(Row[] rows)
+    {
+        foreach (var row in rows)
+        {
+            if (!row.IsSolvableBasedOnCandidatesOfRow)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    public static bool IsSolvableBasedOnCandidates(List<Row> rows)
+    {
+        foreach (var row in rows)
+        {
+            if (!row.IsSolvableBasedOnCandidatesOfRow)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static List<Row> CreateListFromCellReferences(List<Cell> cells)
+    {
+        List<Row> result = new()
+        {
+            new Row(1),
+            new Row(2),
+            new Row(3),
+            new Row(4),
+            new Row(5),
+            new Row(6),
+            new Row(7),
+            new Row(8),
+            new Row(9),
+        };
+
+        foreach (var cell in cells)
+        {
+            result[cell.RowId - 1].Cells.Add(cell);
+        }
+
+        return result;
     }
 }

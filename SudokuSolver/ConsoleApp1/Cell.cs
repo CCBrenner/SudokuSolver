@@ -1,92 +1,105 @@
-﻿using System.Diagnostics.Metrics;
-
-namespace SudokuSolver;
+﻿namespace SudokuSolver;
 
 public class Cell
 {
     public Cell(int row, int column, int givenStartingValue = 0)
     {
-        Row = row;
-        Column = column;
-
-        int rowModulus = row % 3;
-        int squareRow = (row - rowModulus) / 3;
-        int columnModulus = column % 3;
-        int squareColumn = (column - columnModulus) / 3;
-        Square = new int[2]{ squareRow, squareColumn };
+        RowId = row;
+        ColumnId = column;
+        BlockId = GetBlockAssignment(RowId, ColumnId);
+        Id = GetNumberAssignment(RowId, ColumnId);
 
         if (givenStartingValue == 0)
         {
-            Values = new int[10]{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };  // let [0] be entered value for that cell and all others be remaining possibilities
-            IsGivenValue = false;
+            Values = new int[10]{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };  // [0] is "Value"; all others are Candidates
+            ValueStatus = ValueStatus.Undefined;
         }
         else
         {
             Values = new int[10];
-            Values[0] = givenStartingValue;  // let [0] be the given value that never changes; other possibilities are quantity zero
-            IsGivenValue = true;
+            Values[0] = givenStartingValue;  // let [0] be the given value that never changes; Candidates receive assignment of 0
+            ValueStatus = ValueStatus.Given;
         }
 
-        IsExpectedValue = false;
-        IsConfirmedValue = false;
-        NotedPossibilities = new();
+        PositivePencilMarkings = new int[10];
     }
 
     private const int NON_POSSIBILITY_PLACEHOLDER_VALUE = 0;
 
-    public bool IsGivenValue { get; private set; }
-    public bool IsExpectedValue { get; private set; }
-    public bool IsConfirmedValue { get; private set; }
-    public int Row { get; }
-    public int Column { get; }
-    public int[] Square { get; }
+    public ValueStatus ValueStatus { get; private set; }
+    public int Id { get; private set; }
+    public int RowId { get; }
+    public int PosInRow => ColumnId;
+    public int ColumnId { get; }
+    public int PosInCol => RowId;
+    public int BlockId { get; }
+    public int PosInBlock => GetPositionInBlock();
+    public Row Row { get; private set; }
+    public Column Column { get; private set; }
+    public Block Block { get; private set; }
+    public BlockRow BlockRow => Block.BlockRow;
+    public BlockRow BlockColumn => Block.BlockRow;
+    public Puzzle Puzzle { get; private set; }
+
+    // [0] is value,
+    // [1-9] are *negative* pencil markings (possibilities)
     public int[] Values { get; private set; }
-    public List<NotedPossibilityTypeOne> NotedPossibilities { get; set; }
+    // [0] is placeholder for indexing purposes with no other purpose;
+    // [1-9] are *positive* pencil markings (50/50 probabilities in most cases)
+    public int[] PositivePencilMarkings { get; set; }
+    public List<int> Candidates => GetCandidates();
+
     public string Value =>
         Values[0] == NON_POSSIBILITY_PLACEHOLDER_VALUE ? " " : Values[0].ToString();
 
-    public int[] ConvertSquareOfCellToBaseNineIndexing() =>
-        new int[2] { (Square[0] * 3), (Square[1] * 3) };
+    public List<int> TriedValuesAsCurrentCell { get; private set; }
+    public List<int> CandidatesTried { get; private set; }
 
-    public int CheckAndUpdateValueIfOnePossibilityRemaining()
+    public bool HasCandidate(int number) =>
+        Values[number] == number;
+    private int GetNumberAssignment(int row, int column) =>
+        (row * 9) + (column + 1);
+
+    public int UpdateValueBasedOnSingleCandidate()
     {
-        int nonZeroCounter = 0;
+        int candidateCount = 0;
         int savedValueFromIteration = NON_POSSIBILITY_PLACEHOLDER_VALUE;
 
-        int counter = 0;
         foreach (var val in Values)
         {
-            if (val != 0 && counter != 0)
+            if (val != 0)
             {
-                nonZeroCounter++;
+                candidateCount++;
                 savedValueFromIteration = val;
             }
-            counter++;
         }
 
-        if (nonZeroCounter == 1 && savedValueFromIteration != 0)
+        if (candidateCount == 1 && savedValueFromIteration != 0)
         {
             Values[0] = savedValueFromIteration;
-            IsConfirmedValue = true;
+            if (Puzzle.NoExpectedCellValuesInCells)
+                ValueStatus = ValueStatus.Confirmed;
+            else
+                ValueStatus = ValueStatus.Expected;
         }
 
         return savedValueFromIteration;
     }
     public int SetExpectedValue(int expectedValue)
     {
-        if (!IsPossibleValue(expectedValue) && !IsGivenValue)
+        if (!IsCandidate(expectedValue) && ValueStatus != ValueStatus.Given)
         {
             return NON_POSSIBILITY_PLACEHOLDER_VALUE;
         }
 
         Values[0] = expectedValue;
-        IsExpectedValue = true;
+        ValueStatus = ValueStatus.Expected;
 
         return Values[0];
     }
-    public int ReconcileValueWithPossibilities()
+    public int ReconcileValueWithCandidates()
     {
-        if (IsGivenValue || IsConfirmedValue || Values[Values[0]] != NON_POSSIBILITY_PLACEHOLDER_VALUE)
+        if (ValueStatus == ValueStatus.Given || ValueStatus == ValueStatus.Confirmed || Values[Values[0]] != NON_POSSIBILITY_PLACEHOLDER_VALUE)
         {
             return Values[0];
         }
@@ -94,25 +107,29 @@ public class Cell
         Values[0] = NON_POSSIBILITY_PLACEHOLDER_VALUE;
         return Values[0];
     }
-    public int EliminatePossibility(int possibility)
+    public int EliminateCandidate(int candidate)
     {
-        if (possibility == 0 || possibility > 9)
+        if (candidate == 0 || candidate > 9)
         {
             return NON_POSSIBILITY_PLACEHOLDER_VALUE;
         }
 
-        Values[possibility] = NON_POSSIBILITY_PLACEHOLDER_VALUE;
-        return possibility;
+        Values[candidate] = NON_POSSIBILITY_PLACEHOLDER_VALUE;
+        return candidate;
     }
 
-    public int SetValue(int newCellValue)
+    public int AssignConfirmedValue(int newCellValue)
     {
-        if (Values[newCellValue] == NON_POSSIBILITY_PLACEHOLDER_VALUE || IsGivenValue)
+        if (Values[newCellValue] == NON_POSSIBILITY_PLACEHOLDER_VALUE || ValueStatus == ValueStatus.Given)
         {
             return NON_POSSIBILITY_PLACEHOLDER_VALUE;
         }
 
         Values[0] = newCellValue;
+        ValueStatus = ValueStatus.Confirmed;
+
+        // AddCellToQueueForChecking();  // not utilizing in brute force version; adding as reminder for non-brute force version
+
         return newCellValue;
     }
 
@@ -145,7 +162,7 @@ public class Cell
 
         return allValues;
     }
-    private bool IsPossibleValue(int valueBeingChecked)
+    private bool IsCandidate(int valueBeingChecked)
     {
         foreach (var val in Values)
         {
@@ -156,50 +173,278 @@ public class Cell
         }
         return false;
     }
-    /*
-    public List<NotedPossibilityTypeTwo> GetTypeTwoNotedPossibilities()
+    private int GetBlockAssignment(int row, int column)
     {
-        List<NotedPossibilityTypeTwo> notedPossibilityPairs = new();
+        int rowMod = (row - 1) % 3;
+        int blockRow = (row - 1 - rowMod) / 3;
 
-        for (int i = 0; i < NotedPossibilities.Count(); i++)
+        int colMod = (column - 1) % 3;
+        int blockCol = (column - 1 - colMod) / 3;
+
+        int blockAssignment = (blockRow * 3) + blockCol + 1; 
+
+        return blockAssignment;
+    }
+
+    public static Cell[] CreateArrayFromCellReferencesOfMatrix(Cell[,] compositionMatrix)
+    {
+        Cell[] cells = new Cell[82];
+
+        foreach (var cell in compositionMatrix)
         {
-            for (int j = 0; j < NotedPossibilities.Count(); j++)
+            cells[cell.Id] = cell;
+        }
+
+        return cells;
+    }
+    public static List<Cell> CreateListFromCellReferencesOfMatrix(Cell[,] compositionMatrix)
+    {
+        List<Cell> cells = new();
+
+        foreach (var cell in compositionMatrix)
+        {
+            cells.Add(cell);
+        }
+
+        return cells;
+    }
+
+    public void AssignRowReference(Row row)
+    {
+        Row = row;
+    }
+
+    public void AssignColumnReference(Column column)
+    {
+        Column = column;
+    }
+
+    public void AssignBlockReference(Block block)
+    {
+        Block = block;
+    }
+
+    public static List<Cell> GetCellsWithCandidate(List<Cell> cells, int candidateNumber)
+    {
+        List<Cell> cellsWithCandidate = new();
+
+        foreach (var cell in cells)
+        {
+            if (cell is not null)
             {
-                // It is important to have only pairs in ascending order w/o redundancy; "i < j" is doing this here.
-                if (i != j && i < j)
+                if (cell.HasCandidate(candidateNumber))
                 {
-                    int[] pair = new int[2] { i, j };
-                    NotedPossibilityTypeTwo notedPossibiltyPair = new(this, pair);
-                    notedPossibilityPairs.Add(notedPossibiltyPair);
+                    cellsWithCandidate.Add(cell);
                 }
             }
         }
 
-        return notedPossibilityPairs;
+        return cellsWithCandidate;
     }
-    */
-    private List<NotedPossibilityTypeTwo> GetUndisclosedNotedPossibilityPairsIfPresent()
+
+    public static Row? GetCommonRow(List<Cell> cellsWithCandidate)
     {
-        foreach (var notedPossibility in NotedPossibilities)
+        int rowId = 0;
+
+        foreach (var cell in cellsWithCandidate)
         {
-            foreach (var cell in notedPossibility.Cells)  // will always have maximum of 2 iterations
+            if (rowId == 0)
             {
-                if (cell != this)
+                rowId = cell.Row.Id;
+            }
+            else if (rowId != cell.Row.Id)
+            {
+                return null;
+            }
+        }
+
+        return cellsWithCandidate[0].Row;
+    }
+
+    public static Column? GetCommonColumn(List<Cell> cellsWithCandidate)
+    {
+        int columnId = 0;
+
+        foreach (var cell in cellsWithCandidate)
+        {
+            if (columnId == 0)
+            {
+                columnId = cell.Column.Id;
+            }
+            else if (columnId != cell.Column.Id)
+            {
+                return null;
+            }
+        }
+
+        return cellsWithCandidate[0].Column;
+    }
+
+    public static List<Cell> GetCellsWithoutExceptions(List<Cell> cells, List<Cell> cellsWithCandidate)
+    {
+        List<Cell> result = new();
+
+        foreach (var cellOne in cells)
+        {
+            if (cellOne is not null)
+            {
+                bool isException = false;
+
+                foreach (var cellTwo in cellsWithCandidate)
                 {
-                    bool cellsShareTwoCommonNotedPossibilities = cell.ConfirmIfSharesSecondNotedPossibility(this);
+                    if (cellTwo is not null)
+                    {
+                        if (cellOne.Id == cellTwo.Id)
+                        {
+                            isException = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!isException)
+                {
+                    result.Add(cellOne);
                 }
             }
         }
 
-        return new();
+        return result;
     }
 
-    private bool ConfirmIfSharesSecondNotedPossibility(Cell otherCell)
+    public static void EliminateCandidateFromCells(int candidateNumber, List<Cell> cells)
     {
-        foreach (var notedPossibility in NotedPossibilities)
-            foreach (var cell in notedPossibility.Cells)  // will always have maximum of 2 iterations
-                if (cell != this && cell == otherCell)
-                    return true;
+        foreach (var cell in cells)
+        {
+            if (cell is not null)
+            {
+                cell.EliminateCandidate(candidateNumber);
+            }
+        }
+    }
+
+    public static List<int> GetCandidates(List<Cell> cells)
+    {
+        int[] tempArray = new int[10] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+        // eliminate candidates based on cell values from tempArray
+        foreach (var cell in cells)
+        {
+            if (cell is not null)
+            {
+                tempArray[cell.Values[0]] = 0;
+            }
+        }
+
+        // only the remaining candidates, minus all zeros, are returned
+        List<int> result = GetCandidates(tempArray);
+
+        return result;
+    }
+
+    private static List<int> GetCandidates(int[] values)
+    {
+        List<int> result = new();
+
+        for (int i = 0; i < values.Count(); i++)
+        {
+            if (values[i] != 0)
+            {
+                result.Add(values[i]);
+            }
+        }
+
+        return result;
+    }
+
+    public void AssignPuzzleReference(Puzzle puzzle)
+    {
+        Puzzle = puzzle;
+    }
+
+    private int GetPositionInBlock()
+    {
+        int rowMod = (RowId - 1) % 3;
+        int colMod = (ColumnId - 1) % 3;
+        return (rowMod * 3) + colMod + 1;
+    }
+
+    public void RemoveExpectedValueIfNotACandidate()
+    {
+        bool isCandidate = GetIsCandidate(Values[0]);
+
+        if (!isCandidate)
+        {
+            Values[0] = NON_POSSIBILITY_PLACEHOLDER_VALUE;
+        }
+    }
+
+    private bool GetIsCandidate(int value)
+    {
+        foreach (var candidate in Candidates)
+        {
+            if (value == candidate)
+            {
+                return true;
+            }
+        }
+
         return false;
+    }
+
+    private List<int> GetCandidates()
+    {
+        List<int> result = new();
+
+        for (int i = 0; i < Values.Count(); i++)
+        {
+            if (i != 0)
+            {
+                result.Add(Values[i]);
+            }
+        }
+
+        return result;
+    }
+
+    public void Backtrack()
+    {
+        // empty tried values list
+        TriedValuesAsCurrentCell = new List<int>();
+    }
+
+    public void AddCurrentValueToTriedCandidateList()
+    {
+        CandidatesTried.Add(Values[0]);
+    }
+
+    public List<int> GetRemainingCandidatesToTry()
+    {
+        List<int> remainingCandidates = new();
+
+        foreach (var triedCandidate in CandidatesTried)
+        {
+            foreach (var candidate in Candidates)
+            {
+                if (triedCandidate != candidate)
+                {
+                    remainingCandidates.Add(candidate);
+                }
+            }
+        }
+
+        return remainingCandidates;
+    }
+
+    public bool ProceedToNextCandidateToTry()
+    {
+        List<int> remainingCandidates = GetRemainingCandidatesToTry();
+
+        if (remainingCandidates.Count != 0)
+        {
+            return false;
+        }
+
+        
     }
 }
