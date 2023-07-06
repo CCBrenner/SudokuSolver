@@ -2,7 +2,7 @@
 
 public class Puzzle
 {
-    private Puzzle(Cell[,] puzzleMatrix, List<Cell> cells, List<Row> rows, List<Column> columns, List<Block> blocks, List<BlockRow> blockRows, List<BlockColumn> blockClumns)
+    private Puzzle(Cell[,] puzzleMatrix, List<Cell> cells, List<Row> rows, List<Column> columns, List<Block> blocks, List<BlockRow> blockRows, List<BlockColumn> blockClumns, TxnLedger ledger)
     {
         Matrix = puzzleMatrix;
         Cells = cells;
@@ -11,6 +11,7 @@ public class Puzzle
         Blocks = blocks;
         BlockRows = blockRows;
         BlockClumns = blockClumns;
+        Ledger = ledger;
     }
 
     public Cell[,] Matrix { get; private set; }
@@ -20,6 +21,8 @@ public class Puzzle
     public List<Block> Blocks { get; private set; }
     public List<BlockRow> BlockRows { get; private set; }
     public List<BlockColumn> BlockClumns { get; private set; }
+    public TxnLedger Ledger { get; }
+
     public bool NoExpectedCellValuesInCells => GetNoExpectedCellValuesInCells();
 
     public bool IsSolvableBasedOnCandidates => GetIsSolvableBasedOnCandidates();
@@ -31,10 +34,18 @@ public class Puzzle
     public static Puzzle Create(Cell[,] startingMatrix)
     {
         int[,] blankMatrix = MatrixFactory.GetBlankMatrix();
-        return Create(startingMatrix, blankMatrix);
+        return Create(startingMatrix, blankMatrix, new TxnLedger());
     }
-
+    public static Puzzle Create(Cell[,] startingMatrix, TxnLedger ledger)
+    {
+        int[,] blankMatrix = MatrixFactory.GetBlankMatrix();
+        return Create(startingMatrix, blankMatrix, ledger);
+    }
     public static Puzzle Create(Cell[,] startingMatrix, int[,] matrixToSuperimpose)
+    {
+        return Create(startingMatrix, matrixToSuperimpose, new TxnLedger());
+    }
+    public static Puzzle Create(Cell[,] startingMatrix, int[,] matrixToSuperimpose, TxnLedger ledger)
     {
         // Create Matrix of cells through proess of superimposition
         Cell[,] compositionMatrix = SuperimposeNonGivenCellValues(startingMatrix, matrixToSuperimpose);
@@ -63,7 +74,7 @@ public class Puzzle
         BlockColumn.AssignBlockColumnReferenceToBlocksPerBlockColumn(blockColumns);
 
         // Inject and create new puzzle
-        Puzzle puzzle = new(compositionMatrix, cells, rows, columns, blocks, blockRows, blockColumns);
+        Puzzle puzzle = new(compositionMatrix, cells, rows, columns, blocks, blockRows, blockColumns, ledger);
         puzzle.AssignPuzzleReferenceToCells();
 
         return puzzle;

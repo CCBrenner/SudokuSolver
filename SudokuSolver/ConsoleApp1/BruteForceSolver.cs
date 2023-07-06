@@ -5,9 +5,9 @@ public class BruteForceSolver
 	public BruteForceSolver(Puzzle puzzle)
     {
         this.puzzle = puzzle;
-        this.puzzle.Cells.Reverse();
+
+        this.puzzle.Cells.Reverse();  // reversed (for creating RemainingCells stack)
         RemainingCells = new();
-        PreviousCells = new();
         foreach (var cell in this.puzzle.Cells)
         {
             if (cell.ValueStatus != ValueStatus.Given && cell.ValueStatus != ValueStatus.Confirmed)
@@ -15,7 +15,9 @@ public class BruteForceSolver
                 RemainingCells.Push(cell);
             }
         }
-        this.puzzle.Cells.Reverse();
+        this.puzzle.Cells.Reverse();  // reversed back to original order
+
+        PreviousCells = new();
         CurrentCell = RemainingCells.Pop();
         PuzzleIsSolvable = true;
     }
@@ -31,47 +33,40 @@ public class BruteForceSolver
         int loopCounter = 1;
         int candidate;
 
-        // initial constraint of candidates
-        puzzle.RemoveCandidates();
-        ConsoleRender.RenderMatrixCellValuesV3(puzzle);
-
         while (true)
         {
-            //Console.WriteLine($"Main Loop Counter: {loopCounter}");
-            //Console.WriteLine($"Current Cell ID: {CurrentCell.Id}");
             loopCounter++;
 
-            //- GetNextCandidate (returns type int)
+            // get the next candidate to try
             candidate = CurrentCell.GetNextCandidate();
 
+            // if CurrentCell is the CellId 1 and htere are no other candidates to try, exit
             if (candidate == 0 && PreviousCells.Count == 0)
             {
                 PuzzleIsSolvable = false;
                 break;
             }
 
+            // if there are no other candidates to try, then backtrack to previous cell
             if (candidate == 0)
             {
                 candidate = Backtrack();
                 continue;
             }
 
-            //- Assign return value as value of current cell 
-            //Console.WriteLine($"Cell ID {CurrentCell.Id}; New Value: {candidate}");
+            // assign return value as value of current cell 
             CurrentCell.SetExpectedValue(candidate);
             if (RemainingCells.Count == 0) break;
 
-            //- Also assign same return value to TriedCandidates stack in Cell instance
+            // also assign same return value to TriedCandidates stack in Cell instance
             CurrentCell.AddTriedCandidate(candidate);
 
-            // Since Value becomes free, add that value to all respective cells that would have it as a candidate
+            // since Value becomes free, add that value to all respective cells that would have it as a candidate
             // and then eliminate all non possible candidates
             puzzle.UpdateCandidates();
 
-            //- Assign CurrentCell to PreviousCells stack in Puzzle instance
+            // assign CurrentCell to PreviousCells stack in Puzzle instance
             GoToNextCell();
-
-            //- Repeat from beginning of loop
         }
 
         // return true if puzzle is solved; false if could not be solved
@@ -80,28 +75,29 @@ public class BruteForceSolver
 
     private int Backtrack()
     {
-        //when a cell has no more candidates to try when calling GetNextCandidate:
-        //- Clear the TriedCandidates stack of CurrentCell until stack count == 0
+        // when a cell has no more candidates to try when calling GetNextCandidate:
+        // clear the TriedCandidates stack of CurrentCell until stack count == 0
         CurrentCell.ResetCandidateTracking();
         CurrentCell.ResetValue();
 
-        //- Push cell unto RemainingCells stack && Pop cell from PreviousCells stack && Assign popped cell from stack to CurrentCell property
+        // push cell unto RemainingCells stack && Pop cell from PreviousCells stack && Assign popped cell from stack to CurrentCell property
         GoToPreviousCell();
-        //Console.WriteLine($"Backtrack call back to Cell ID {CurrentCell.Id}");
 
-        // Since Value becomes free, add that value to all respective cells that would have it as a candidate
+        // since Value becomes free, add that value to all respective cells that would have it as a candidate
         // and then eliminate all non possible candidates
         puzzle.UpdateCandidates();
 
-        //- GetNextCandidate from CurrentCell
+        // get the next candidate to try
         int candidate = CurrentCell.GetNextCandidate();
 
+        // if CurrentCell is the CellId 1 and htere are no other candidates to try, exit
         if (candidate == 0 && PreviousCells.Count == 0)
         {
             PuzzleIsSolvable = false;
             return candidate;
         }
 
+        // if there are no other candidates to try, then backtrack to previous cell
         if (candidate == 0)
         {
             candidate = Backtrack();
@@ -113,12 +109,10 @@ public class BruteForceSolver
     {
         PreviousCells.Push(CurrentCell);
         CurrentCell = RemainingCells.Pop();
-        //ConsoleRender.RenderMatrixCellValuesV2(puzzle);
     }
     private void GoToPreviousCell()
     {
         RemainingCells.Push(CurrentCell);
         CurrentCell = PreviousCells.Pop();
-        //ConsoleRender.RenderMatrixCellValuesV2(puzzle);
     }
 }

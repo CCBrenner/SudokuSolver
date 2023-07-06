@@ -49,7 +49,7 @@ public class GenericTests
         // Assert
         Assert.AreEqual(0, returnValue);
         Assert.AreEqual(4, puzzle.Matrix[4, 8].Values[0]);
-        Assert.AreEqual(4.ToString(), puzzle.Matrix[4, 8].Value);
+        Assert.AreEqual(4, puzzle.Matrix[4, 8].Values[0]);
     }
     [TestMethod]
     public void TestResetValueIfValueIsCurrentlyNotAPossibilityOfTheCell()
@@ -192,7 +192,14 @@ public class GenericTests
         bool actualPuzzleWasSolved = solver.Solve();
 
         // Assert
+        ConsoleRender.RenderMatrixCellValuesV3(puzzle);
         Assert.IsTrue(actualPuzzleWasSolved);
+        Assert.AreEqual(5, puzzle.Matrix[8, 8].Values[0]);
+        Assert.AreEqual(4, puzzle.Matrix[4, 4].Values[0]);
+        Assert.AreEqual(6, puzzle.Matrix[0, 0].Values[0]);
+        Assert.AreEqual(6, puzzle.Matrix[8, 1].Values[0]);
+        Assert.AreEqual(1, puzzle.Matrix[3, 7].Values[0]);
+        Assert.AreEqual(4, puzzle.Matrix[2, 3].Values[0]);
     }
     /*
     [TestMethod]

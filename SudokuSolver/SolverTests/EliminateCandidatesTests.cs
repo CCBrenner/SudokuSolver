@@ -220,8 +220,6 @@ public class EliminateCandidatesTests
         // vvv Second Act & Assert to check for consistency with non-zero indexed positions for block. vvv
 
         // Act
-        //blockCoords = new int[] { 1, 1 };
-        //puzzle.EliminateBlockPossibilities(blockCoords);
         Block.EliminateCandidatesByDistinctInNeighborhood(puzzle.Blocks);
 
         // Assert

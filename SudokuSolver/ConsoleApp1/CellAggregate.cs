@@ -22,7 +22,7 @@ public abstract class CellAggregate
                     return false;
                 }
 
-                if (cell.Value[0] != 0)
+                if (cell.Values[0] != 0)
                 {
                     valuelessCellCount++;
                 }

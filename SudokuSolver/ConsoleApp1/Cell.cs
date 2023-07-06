@@ -50,9 +50,6 @@ public class Cell
     public int[] PositivePencilMarkings { get; set; }
     public List<int> Candidates => GetCandidates();
 
-    public string Value =>
-        Values[0] == NON_POSSIBILITY_PLACEHOLDER_VALUE ? " " : Values[0].ToString();
-
     public List<int> TriedValuesAsCurrentCell { get; private set; }
     public List<int> CandidatesTried { get; private set; }
     public List<int> TriedCandidates { get; private set; }
@@ -89,6 +86,8 @@ public class Cell
     }
     public int SetExpectedValue(int expectedValue)
     {
+        int previousValue = Values[0];
+
         if (!IsCandidate(expectedValue) && ValueStatus != ValueStatus.Given)
         {
             return NON_POSSIBILITY_PLACEHOLDER_VALUE;
@@ -96,6 +95,14 @@ public class Cell
 
         Values[0] = expectedValue;
         ValueStatus = ValueStatus.Expected;
+
+        if (Puzzle is not null)
+        {
+            if (previousValue != Values[0])
+            {
+                Puzzle.Ledger.RecordNewTxn(Id, 0, previousValue, Values[0]);
+            }
+        }
 
         return Values[0];
     }
@@ -111,12 +118,20 @@ public class Cell
     }
     public int EliminateCandidate(int candidate)
     {
+        int previousValue = Values[candidate];
+
         if (candidate == 0 || candidate > 9)
         {
             return NON_POSSIBILITY_PLACEHOLDER_VALUE;
         }
 
         Values[candidate] = NON_POSSIBILITY_PLACEHOLDER_VALUE;
+
+        if (previousValue != Values[candidate])
+        {
+            Puzzle.Ledger.RecordNewTxn(Id, candidate, previousValue, Values[candidate]);
+        }
+
         return candidate;
     }
 
@@ -186,18 +201,6 @@ public class Cell
         int blockAssignment = (blockRow * 3) + blockCol + 1; 
 
         return blockAssignment;
-    }
-
-    public static Cell[] CreateArrayFromCellReferencesOfMatrix(Cell[,] compositionMatrix)
-    {
-        Cell[] cells = new Cell[82];
-
-        foreach (var cell in compositionMatrix)
-        {
-            cells[cell.Id] = cell;
-        }
-
-        return cells;
     }
     public static List<Cell> CreateListFromCellReferencesOfMatrix(Cell[,] compositionMatrix)
     {
@@ -416,11 +419,6 @@ public class Cell
         TriedValuesAsCurrentCell = new List<int>();
     }
 
-    public void AddCurrentValueToTriedCandidateList()
-    {
-        CandidatesTried.Add(Values[0]);
-    }
-
     public List<int> GetRemainingCandidatesToTry()
     {
         List<int> remainingCandidates = new();
@@ -464,12 +462,24 @@ public class Cell
     {
         for (int i = 1; i < Values.Count(); i++)
         {
+            int previousValue = Values[i];
             Values[i] = i;
+            if (previousValue != Values[i])
+            {
+                Puzzle.Ledger.RecordNewTxn(Id, i, previousValue, Values[i]);
+            }
         }
     }
 
     public void ResetValue()
     {
+        int previousValue = Values[0];
+
         Values[0] = NON_POSSIBILITY_PLACEHOLDER_VALUE;
+
+        if (previousValue != Values[0])
+        {
+            Puzzle.Ledger.RecordNewTxn(Id, 0, previousValue, Values[0]);
+        }
     }
 }

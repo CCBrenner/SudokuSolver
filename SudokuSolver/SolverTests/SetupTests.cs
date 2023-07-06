@@ -29,13 +29,9 @@ public class SetupTests
         Cell[,] createdCellMatrix = MatrixFactory.CreateMatrix(intMatrix);
 
         // Assert
-        Assert.AreEqual(5.ToString(), createdCellMatrix[0, 2].Value);
-        Assert.AreEqual(3.ToString(), createdCellMatrix[1, 2].Value);
-        Assert.AreEqual(3.ToString(), createdCellMatrix[4, 5].Value);
-
-        Assert.AreEqual(" ", createdCellMatrix[0, 6].Value);
-        Assert.AreEqual(" ", createdCellMatrix[4, 2].Value);
-        Assert.AreEqual(" ", createdCellMatrix[8, 8].Value);
+        Assert.AreEqual(5, createdCellMatrix[0, 2].Values[0]);
+        Assert.AreEqual(3, createdCellMatrix[1, 2].Values[0]);
+        Assert.AreEqual(3, createdCellMatrix[4, 5].Values[0]);
     }
 
     [TestMethod]
@@ -177,11 +173,11 @@ public class SetupTests
         Puzzle puzzle = Puzzle.Create(createdCellMatrix, superImposeMatrix);
 
         // Assert
-        Assert.AreEqual(5.ToString(), puzzle.Matrix[0, 2].Value);  // given (control)
-        Assert.AreEqual(1.ToString(), puzzle.Matrix[0, 0].Value);  // superimposed (from template)
-        Assert.AreEqual(2.ToString(), puzzle.Matrix[2, 4].Value);  // superimposed (from template)
-        Assert.AreEqual(8.ToString(), puzzle.Matrix[8, 8].Value);  // superimposed (from template)
-        Assert.AreEqual(1.ToString(), puzzle.Matrix[7, 4].Value);  // superimposed (from template)
+        Assert.AreEqual(5, puzzle.Matrix[0, 2].Values[0]);  // given (control)
+        Assert.AreEqual(1, puzzle.Matrix[0, 0].Values[0]);  // superimposed (from template)
+        Assert.AreEqual(2, puzzle.Matrix[2, 4].Values[0]);  // superimposed (from template)
+        Assert.AreEqual(8, puzzle.Matrix[8, 8].Values[0]);  // superimposed (from template)
+        Assert.AreEqual(1, puzzle.Matrix[7, 4].Values[0]);  // superimposed (from template)
     }
     [TestMethod]
     public void TestCreatingPuzzleFromFactoryMethodSetsIsExpectedValueToTrueForSuperimposedValuesFromTemplateMatrixOnly()
