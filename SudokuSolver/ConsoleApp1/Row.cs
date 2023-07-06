@@ -108,27 +108,6 @@ public class Row : CellAggregate
             }
         }
     }
-
-    private SortedSet<int> GetCandidatesToEliminate()
-    {
-        // Go through each cell in the row & if they have any of the flags marked as true, add them to the SortedSet.
-        SortedSet<int> rowCandidatesToEliminate = new();
-
-        foreach (var cell in Cells)
-        {
-            if (cell is not null)
-            {
-                if (cell.ValueStatus == ValueStatus.Given || cell.ValueStatus == ValueStatus.Confirmed)
-                {
-                    int possiblityToEliminate = cell.Values[0];
-                    rowCandidatesToEliminate.Add(possiblityToEliminate);
-                }
-            }
-        }
-
-        return rowCandidatesToEliminate;
-    }
-
     public static bool IsSolvableBasedOnCandidates(Row[] rows)
     {
         foreach (var row in rows)

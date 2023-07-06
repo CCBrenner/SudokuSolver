@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\local_console_projects\\SudokuSolver_bruteforce\\ConsoleApp1\\SudokuSolver.csproj",
+      "projectUniqueName": "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\gh_clone_hosting\\SudokuSolver\\SudokuSolver\\ConsoleApp1\\SudokuSolver.csproj",
       "projectName": "SudokuSolver",
-      "projectPath": "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\local_console_projects\\SudokuSolver_bruteforce\\ConsoleApp1\\SudokuSolver.csproj",
+      "projectPath": "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\gh_clone_hosting\\SudokuSolver\\SudokuSolver\\ConsoleApp1\\SudokuSolver.csproj",
       "packagesPath": "C:\\Users\\Collyn B - VotP\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\local_console_projects\\SudokuSolver_bruteforce\\ConsoleApp1\\obj\\",
+      "outputPath": "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\gh_clone_hosting\\SudokuSolver\\SudokuSolver\\ConsoleApp1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Collyn B - VotP\\AppData\\Roaming\\NuGet\\NuGet.Config",

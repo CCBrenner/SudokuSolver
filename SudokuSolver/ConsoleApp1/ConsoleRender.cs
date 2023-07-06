@@ -1,21 +1,9 @@
-﻿namespace SudokuSolver;
+﻿using System.Security.Cryptography.X509Certificates;
+
+namespace SudokuSolver;
 
 public class ConsoleRender
 {
-    public static void RenderMatrixCellValuesV1(Puzzle puzzle)
-    {
-        for (int i = 0; i < 9; i++)
-        {
-            if (i % 3 == 0 && i != 0)
-            {
-                Console.WriteLine();
-            }
-            string row = $"[   {puzzle.Matrix[i, 0].GetAllValues()} {puzzle.Matrix[i, 1].GetAllValues()} {puzzle.Matrix[i, 2].GetAllValues()} ] [ " +
-                         $"  {puzzle.Matrix[i, 3].GetAllValues()} {puzzle.Matrix[i, 4].GetAllValues()} {puzzle.Matrix[i, 5].GetAllValues()} ] [ " +
-                         $"  {puzzle.Matrix[i, 6].GetAllValues()} {puzzle.Matrix[i, 7].GetAllValues()} {puzzle.Matrix[i, 8].GetAllValues()} ]\n";
-            Console.Write(row);
-        }
-    }
     public static string RenderMatrix(Puzzle puzzle)
     {
         string matrixRenderString = GetMatrixRenderString(puzzle);
@@ -36,6 +24,20 @@ public class ConsoleRender
         }
 
         return matrixRender;
+    }
+    public static void RenderMatrixCellValuesV1(Puzzle puzzle)
+    {
+        for (int i = 0; i < 9; i++)
+        {
+            if (i % 3 == 0 && i != 0)
+            {
+                Console.WriteLine();
+            }
+            string row = $"[   {puzzle.Matrix[i, 0].GetAllValues()} {puzzle.Matrix[i, 1].GetAllValues()} {puzzle.Matrix[i, 2].GetAllValues()} ] [ " +
+                         $"  {puzzle.Matrix[i, 3].GetAllValues()} {puzzle.Matrix[i, 4].GetAllValues()} {puzzle.Matrix[i, 5].GetAllValues()} ] [ " +
+                         $"  {puzzle.Matrix[i, 6].GetAllValues()} {puzzle.Matrix[i, 7].GetAllValues()} {puzzle.Matrix[i, 8].GetAllValues()} ]\n";
+            Console.Write(row);
+        }
     }
     public static void RenderMatrixCellValuesV2(Puzzle puzzle)
     {
@@ -63,6 +65,21 @@ public class ConsoleRender
                     $"{tenSpaces}{tenSpaces}{{{FormatCandidates(puzzle.Blocks[i].Candidates)}}}{tenSpaces}\n\n";
                 Console.Write(row);
             }
+        }
+    }
+    public static void RenderMatrixCellValuesV3(Puzzle puzzle)
+    {
+        string row = string.Empty;
+
+        for (int i = 0; i < 9; i++)
+        {
+            row = $"[ {puzzle.Matrix[i, 0].Values[0]} {puzzle.Matrix[i, 1].Values[0]} {puzzle.Matrix[i, 2].Values[0]} ]  " +
+                  $"[ {puzzle.Matrix[i, 3].Values[0]} {puzzle.Matrix[i, 4].Values[0]} {puzzle.Matrix[i, 5].Values[0]} ]  " +
+                  $"[ {puzzle.Matrix[i, 6].Values[0]} {puzzle.Matrix[i, 7].Values[0]} {puzzle.Matrix[i, 8].Values[0]} ]\n";
+            Console.Write(row);
+
+            if (i % 3 == 2)
+                Console.WriteLine();
         }
     }
 

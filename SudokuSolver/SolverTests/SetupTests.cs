@@ -1,4 +1,5 @@
 ﻿using SudokuSolver;
+using System.Diagnostics.Contracts;
 
 namespace SolverTests;
 
@@ -263,5 +264,39 @@ public class SetupTests
         Assert.AreEqual(expected[3], actual[3]);
         Assert.AreEqual(expected[4], actual[4]);
         Assert.AreEqual(expected[7], actual[7]);
+    }
+    [TestMethod]
+    public void TestCellIdsAreFromOneToEightyOneInOrderInPuzzleCellList()
+    {
+        // Arrange
+        int[,] intMatrix =
+        {
+            { 0, 0, 5,   0, 4, 0,   0, 8, 0 },
+            { 0, 0, 3,   0, 0, 2,   0, 0, 0 },
+            { 0, 0, 0,   0, 0, 0,   0, 9, 1 },
+
+            { 8, 0, 0,   7, 0, 0,   0, 1, 0 },
+            { 2, 0, 0,   8, 0, 3,   0, 0, 7 },
+            { 0, 6, 0,   0, 0, 4,   0, 0, 9 },
+
+            { 4, 3, 0,   0, 0, 0,   0, 0, 0 },
+            { 0, 0, 0,   9, 0, 0,   1, 0, 0 },
+            { 0, 8, 0,   0, 5, 0,   6, 0, 0 },
+        };
+        Cell[,] createdCellMatrix = MatrixFactory.CreateMatrix(intMatrix);
+
+        // Act
+        Puzzle puzzle = Puzzle.Create(createdCellMatrix);
+
+        // Assert
+        Assert.AreEqual(5, puzzle.Cells[4].Id);
+        Assert.AreEqual(28, puzzle.Cells[27].Id);
+        Assert.AreEqual(4, puzzle.Cells[3].Id);
+        Assert.AreEqual(10, puzzle.Cells[9].Id);
+        Assert.AreEqual(81, puzzle.Cells[80].Id);
+
+        Assert.AreEqual(1, puzzle.Matrix[0,0].Id);
+        Assert.AreEqual(23, puzzle.Matrix[2,4].Id);
+        Assert.AreEqual(81, puzzle.Matrix[8,8].Id);
     }
 }

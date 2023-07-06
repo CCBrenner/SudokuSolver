@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "I5BXgByWefFX/vES8qPDivY2XgwJWznfqRxw4aR7TjB4VaLYj8bGY5Lowrs7vwGr8yVp+7uPYEKQjZrwA7NPhA==",
+  "dgSpecHash": "KpkKjoiewRtFwrsc8YkrqRT6cr8dkcWgns71zSygWhLZIGV/GYMlBBOLPtDhHXk/reofwycSQLzdelVyTik0SQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\local_console_projects\\SudokuSolver_bruteforce\\ConsoleApp1\\SudokuSolver.csproj",
+  "projectFilePath": "C:\\Users\\Collyn B - VotP\\Desktop\\Professional\\Software Engineering\\projects\\gh_clone_hosting\\SudokuSolver\\SudokuSolver\\ConsoleApp1\\SudokuSolver.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

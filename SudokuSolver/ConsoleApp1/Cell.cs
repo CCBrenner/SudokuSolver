@@ -22,6 +22,7 @@ public class Cell
         }
 
         PositivePencilMarkings = new int[10];
+        TriedCandidates = new();
     }
 
     private const int NON_POSSIBILITY_PLACEHOLDER_VALUE = 0;
@@ -54,11 +55,12 @@ public class Cell
 
     public List<int> TriedValuesAsCurrentCell { get; private set; }
     public List<int> CandidatesTried { get; private set; }
+    public List<int> TriedCandidates { get; private set; }
 
     public bool HasCandidate(int number) =>
         Values[number] == number;
     private int GetNumberAssignment(int row, int column) =>
-        (row * 9) + (column + 1);
+        ((row - 1) * 9) + column;
 
     public int UpdateValueBasedOnSingleCandidate()
     {
@@ -394,15 +396,16 @@ public class Cell
 
     private List<int> GetCandidates()
     {
-        List<int> result = new();
+        SortedSet<int> sortedSet = new();
 
-        for (int i = 0; i < Values.Count(); i++)
+        for (int i = 1; i < Values.Count(); i++)
         {
-            if (i != 0)
-            {
-                result.Add(Values[i]);
-            }
+            sortedSet.Add(Values[i]);
         }
+
+        IEnumerable<int> iEnum = sortedSet;
+        List<int> result = iEnum.ToList();
+        if (result[0] == 0) result.RemoveAt(0);
 
         return result;
     }
@@ -435,16 +438,38 @@ public class Cell
 
         return remainingCandidates;
     }
-
-    public bool ProceedToNextCandidateToTry()
+    public void AddTriedCandidate(int candidate)
     {
-        List<int> remainingCandidates = GetRemainingCandidatesToTry();
+        TriedCandidates.Add(candidate);
+    }
 
-        if (remainingCandidates.Count != 0)
+    public int GetNextCandidate()
+    {
+        foreach (var val in Candidates)
         {
-            return false;
+            if (!TriedCandidates.Contains(val))
+            {
+                return val;
+            }
         }
+        return NON_POSSIBILITY_PLACEHOLDER_VALUE;
+    }
 
-        
+    public void ResetCandidateTracking()
+    {
+        TriedCandidates = new List<int>();
+    }
+
+    public void RehydrateCandidates()
+    {
+        for (int i = 1; i < Values.Count(); i++)
+        {
+            Values[i] = i;
+        }
+    }
+
+    public void ResetValue()
+    {
+        Values[0] = NON_POSSIBILITY_PLACEHOLDER_VALUE;
     }
 }

@@ -196,4 +196,21 @@ public class Puzzle
     {
         Cell? potentialNewCurrentCell = Cells.FirstOrDefault(x => x.Id == (newCurrenCellId - 1));
     }
+
+    public void UpdateCandidates()
+    {
+        FillWithCandidates();
+        RemoveCandidates();
+    }
+
+    private void FillWithCandidates()
+    {
+        foreach (var cell in Cells)
+        {
+            if (cell.ValueStatus != ValueStatus.Given && cell.ValueStatus != ValueStatus.Confirmed)
+            {
+                cell.RehydrateCandidates();
+            }
+        }
+    }
 }

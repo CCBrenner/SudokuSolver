@@ -121,29 +121,110 @@ public class GenericTests
             { 0, 0, 0,   0, 0, 0,   0, 0, 0 },
             { 0, 0, 0,   0, 0, 0,   0, 0, 0 },
         };
-        int[,] superImposeMatrix =
-        {
-            { 1, 2, 3,   4, 5, 6,   7, 8, 9 },
-            { 4, 5, 6,   7, 8, 9,   1, 2, 3 },
-            { 7, 8, 9,   1, 2, 3,   4, 5, 6 },
-
-            { 2, 3, 4,   5, 6, 7,   8, 9, 1 },
-            { 5, 6, 7,   8, 9, 1,   2, 3, 4 },
-            { 8, 9, 1,   2, 3, 4,   5, 6, 7 },
-
-            { 3, 4, 5,   6, 7, 8,   9, 1, 2 },
-            { 6, 7, 8,   9, 1, 2,   3, 4, 5 },
-            { 9, 1, 2,   3, 4, 5,   6, 7, 8 },
-        };
         Cell[,] createdCellMatrix = MatrixFactory.CreateMatrix(givenMatrix);
-        Puzzle puzzle = Puzzle.Create(createdCellMatrix, superImposeMatrix);
+        Puzzle puzzle = Puzzle.Create(createdCellMatrix);
         puzzle.RemoveCandidates();
 
         // Act
-        puzzle.Matrix[0, 5].UpdateValueBasedOnSingleCandidate();
+        puzzle.UpdateCellValuesBasedOnSingleCandidate();
 
         // Assert
-        Assert.IsTrue(puzzle.Matrix[0, 5].Candidates.Count > 1);
-        Assert.AreEqual(6, puzzle.Matrix[0, 5].Values[0]);
+        Assert.IsTrue(puzzle.Matrix[0, 4].Candidates.Count == 1);
+        Assert.AreEqual(9, puzzle.Matrix[0, 4].Values[0]);
     }
+
+    [TestMethod]
+    public void TestCellCandidatesReturnsListOfNonZeroCandidates()
+    {
+        // Arrange
+        int[,] matrix33 =
+        {
+            { 0, 0, 5, 0, 3, 0, 0, 8, 0 },
+            { 0, 0, 3, 0, 0, 2, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 9, 1 },
+
+            { 8, 0, 0, 7, 0, 0, 0, 1, 0 },
+            { 2, 0, 0, 8, 0, 3, 0, 0, 7 },
+            { 0, 6, 0, 0, 0, 4, 0, 0, 9 },
+
+            { 4, 3, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 9, 0, 0, 1, 0, 0 },
+            { 0, 8, 0, 0, 5, 0, 6, 0, 0 },
+        };
+        Cell[,] createdCellMatrix = MatrixFactory.CreateMatrix(matrix33);
+        Puzzle puzzle = Puzzle.Create(createdCellMatrix);
+
+        // Act
+        puzzle.RemoveCandidates();
+
+        // Assert
+        Assert.IsTrue(puzzle.Matrix[0, 1].Candidates.Contains(1));
+        Assert.IsTrue(puzzle.Matrix[0, 1].Candidates.Contains(2));
+        Assert.IsTrue(puzzle.Matrix[0, 1].Candidates.Contains(7));
+
+        Assert.IsFalse(puzzle.Matrix[0, 1].Candidates.Contains(3));
+        Assert.IsFalse(puzzle.Matrix[0, 1].Candidates.Contains(5));
+        Assert.IsFalse(puzzle.Matrix[0, 1].Candidates.Contains(8));
+    }
+    [TestMethod]
+    public void TestBruteForceSudokuSolverSolvesPuzzles()
+    {
+        // Arrange
+        int[,] startingMatrix = new int[9, 9]
+        {
+            { 6, 0, 7,   1, 8, 0,   3, 0, 0 },
+            { 0, 0, 0,   0, 3, 0,   0, 0, 2 },
+            { 0, 0, 5,   0, 0, 0,   0, 0, 0 },
+
+            { 0, 2, 0,   8, 0, 0,   0, 0, 0 },
+            { 0, 5, 0,   0, 0, 0,   6, 0, 0 },
+            { 8, 0, 6,   0, 0, 7,   0, 0, 4 },
+
+            { 0, 0, 0,   0, 0, 4,   0, 9, 0 },
+            { 0, 8, 0,   0, 0, 0,   0, 0, 0 },
+            { 1, 0, 3,   7, 0, 0,   2, 0, 0 },
+        };
+        Cell[,] matrix = MatrixFactory.CreateMatrix(startingMatrix);
+        Puzzle puzzle = Puzzle.Create(matrix);
+        BruteForceSolver solver = new BruteForceSolver(puzzle);
+
+        // Act
+        bool actualPuzzleWasSolved = solver.Solve();
+
+        // Assert
+        Assert.IsTrue(actualPuzzleWasSolved);
+    }
+    /*
+    [TestMethod]
+    public void TestUpdateCandidatesHydratesAndRemovesCandidatesToLeavePossibleCandidatesOnly()
+    {
+        // Arrange
+        int[,] matrix33 =
+        {
+            { 0, 0, 5, 0, 3, 0, 0, 8, 0 },
+            { 0, 0, 3, 0, 0, 2, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 0, 9, 1 },
+
+            { 8, 0, 0, 7, 0, 0, 0, 1, 0 },
+            { 2, 0, 0, 8, 0, 3, 0, 0, 7 },
+            { 0, 6, 0, 0, 0, 4, 0, 0, 9 },
+
+            { 4, 3, 0, 0, 0, 0, 0, 0, 0 },
+            { 0, 0, 0, 9, 0, 0, 1, 0, 0 },
+            { 0, 8, 0, 0, 5, 0, 6, 0, 0 },
+        };
+        Cell[,] createdCellMatrix = MatrixFactory.CreateMatrix(matrix33);
+        Puzzle puzzle = Puzzle.Create(createdCellMatrix);
+        puzzle.RemoveCandidates();
+        puzzle.Matrix[0, 0].SetExpectedValue(1);
+        puzzle.Matrix[0, 1].SetExpectedValue(2);
+        puzzle.Matrix[0, 4].SetExpectedValue(4);
+        puzzle.Matrix[0, 4].ResetValue();
+
+    }/*
+    [TestMethod]
+    public void TestGetNextCandidateGrabsTheNextUntriedCandidateAvailableForTheCell()
+    {
+
+    }*/
 }

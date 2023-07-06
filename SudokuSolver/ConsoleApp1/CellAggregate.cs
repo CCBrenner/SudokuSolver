@@ -38,4 +38,31 @@ public abstract class CellAggregate
 
         return true;
     }
+    protected SortedSet<int> GetCandidatesToEliminate()
+    {
+        // Go through each cell in the row & if they have any of the flags marked as true, add them to the SortedSet.
+        SortedSet<int> candidatesToEliminate = new();
+
+        foreach (var cell in Cells)
+        {
+            if (cell is not null)
+            {
+                /*
+                if (cell.ValueStatus == ValueStatus.Given || cell.ValueStatus == ValueStatus.Confirmed)
+                {
+                    int possiblityToEliminate = cell.Values[0];
+                    Console.WriteLine($"Cell ID: {cell.Id}, candidateToEliminate: {possiblityToEliminate}");
+                    rowCandidatesToEliminate.Add(possiblityToEliminate);
+                }*/
+                if (cell.Values[0] != 0)
+                {
+                    int possiblityToEliminate = cell.Values[0];
+                    //Console.WriteLine($"Cell ID: {cell.Id}, candidateToEliminate: {possiblityToEliminate}");
+                    candidatesToEliminate.Add(possiblityToEliminate);
+                }
+            }
+        }
+
+        return candidatesToEliminate;
+    }
 }

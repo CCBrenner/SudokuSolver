@@ -165,7 +165,7 @@ public class Block : CellAggregate
             }
         }
     }
-
+    /*
     private SortedSet<int> GetCandidatesToEliminate()
     {
         // Go through each cell in the column & if they have any of the flags marked as true, add them to the SortedSet.
@@ -181,7 +181,7 @@ public class Block : CellAggregate
         }
 
         return columnCandidatesToEliminate;
-    }
+    }*/
 
     public static void EliminateCandidatesByCandidateLines(Block[] blocks)
     {

@@ -94,7 +94,7 @@ public class Column : CellAggregate
         // Eliminate candidates of cells in the column
         EliminateCandidatesFromCells(candidatesToEliminate);
     }
-
+    /*
     private SortedSet<int> GetCandidatesToEliminate()
     {
         // Go through each cell in the column & if they have any of the flags marked as true, add them to the SortedSet.
@@ -113,7 +113,7 @@ public class Column : CellAggregate
         }
 
         return columnCandidatesToEliminate;
-    }
+    }*/
 
     private void EliminateCandidatesFromCells(SortedSet<int> candidatesToEliminate)
     {
