@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 
 namespace SudokuSolver;
 
@@ -126,5 +127,35 @@ public class ConsoleRender
         }
 
         return cellInfo;
+    }
+
+    public static void RenderTxns(TxnLedger ledger, int startingIndex = 1, int finishingIndex = 1000000000)
+    {
+        int count = 0;
+        for (int i = startingIndex; i <= finishingIndex; i++)
+        {
+            RenderTxn(ledger, ledger.Txns[i - 1].Id);
+            count++;
+        }
+        Console.WriteLine($"Total Results: {count}");
+    }
+    public static void RenderTxn(TxnLedger ledger, int txnId)
+    {
+        int txnIndex = txnId - 1;
+        Console.WriteLine($"Txn# {ledger.Txns[txnIndex].Id} | CellId {ledger.Txns[txnIndex].CellId} | IoV {ledger.Txns[txnIndex].IndexOfValue} | Prev {ledger.Txns[txnIndex].Previous} | New {ledger.Txns[txnIndex].New}");
+    }
+    public static void RenderValueTxns(TxnLedger ledger, int startingIndex = 1, int finishingIndex = 1000000000)
+    {
+        int end = ledger.Txns.Count < finishingIndex ? ledger.Txns.Count + 1 : finishingIndex;
+        int count = 0;
+        for (int i = startingIndex; i < end; i++)
+        {
+            if (ledger.Txns[i - 1].IndexOfValue == 0)
+            {
+                RenderTxn(ledger, ledger.Txns[i - 1].Id);
+                count++;
+            }
+        }
+        Console.WriteLine($"Total Results: {count}");
     }
 }

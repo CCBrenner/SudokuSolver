@@ -1,4 +1,6 @@
-﻿namespace SudokuSolver;
+﻿using System.Timers;
+
+namespace SudokuSolver;
 
 public class BruteForceSolver
 {
@@ -20,16 +22,24 @@ public class BruteForceSolver
         PreviousCells = new();
         CurrentCell = RemainingCells.Pop();
         PuzzleIsSolvable = true;
+        StopwatchTime = 0;
+
+        timer = new(100);  // every tenth of a second
+        SetupTimer();
     }
 
     private Puzzle puzzle;
+    private System.Timers.Timer timer;
     public Cell CurrentCell { get; private set; }
 	public Stack<Cell> RemainingCells { get; private set; }
 	public Stack<Cell> PreviousCells { get; private set; }
     public bool PuzzleIsSolvable { get; private set; }
+    public decimal StopwatchTime { get; private set; }
 
     public bool Solve()
     {
+        timer.Start();
+
         int loopCounter = 1;
         int candidate;
 
@@ -69,8 +79,20 @@ public class BruteForceSolver
             GoToNextCell();
         }
 
+        timer.Stop();
+
         // return true if puzzle is solved; false if could not be solved
         return PuzzleIsSolvable;
+    }
+
+    private void SetupTimer()
+    {
+        timer.Elapsed += TimerElapsed;
+    }
+
+    private void TimerElapsed(object? sender, ElapsedEventArgs e)
+    {
+        StopwatchTime += 0.1M;
     }
 
     private int Backtrack()

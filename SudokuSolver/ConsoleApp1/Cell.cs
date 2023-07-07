@@ -43,10 +43,11 @@ public class Cell
     public Puzzle Puzzle { get; private set; }
 
     // [0] is value,
-    // [1-9] are *negative* pencil markings (possibilities)
+    // [1-9] are candidates (possibilities)
     public int[] Values { get; private set; }
+
     // [0] is placeholder for indexing purposes with no other purpose;
-    // [1-9] are *positive* pencil markings (50/50 probabilities in most cases)
+    // [1-9] are *positive* pencil markings (50/50 probabilities in nearly every case)
     public int[] PositivePencilMarkings { get; set; }
     public List<int> Candidates => GetCandidates();
 

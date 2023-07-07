@@ -8,6 +8,7 @@ public class PuzzleBook
     {
         Dictionary<string, int[,]> puzzles = new Dictionary<string, int[,]>()
         {
+            // takes about 4.5 seconds to solve
             {
                 "vol20matrix33",
                 new int[9,9]
@@ -40,6 +41,7 @@ public class PuzzleBook
                     { 0, 0, 0,   0, 3, 4,   0, 0, 0 },
                 }
             },
+            // typically takes about 20 - 22 seconds to solve
             {
                 "random2",
                 new int[9,9]
