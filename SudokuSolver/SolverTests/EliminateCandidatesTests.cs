@@ -38,7 +38,7 @@ public class EliminateCandidatesTests
             { 9, 1, 2,   3, 4, 5,   6, 7, 8 },
         };
         Cell[,] createdCellMatrix = MatrixFactory.CreateMatrix(intMatrix);
-        Puzzle puzzle = Puzzle.Create(createdCellMatrix, superImposeMatrix);
+        Puzzle puzzle = Puzzle.Create(intMatrix, superImposeMatrix);
         /* Combined, for reference:
         [ 1 2 5 ]  [ 4 4 6 ]  [ 7 8 9 ]
         [ 4 5 3 ]  [ 7 8 2 ]  [ 1 2 3 ]
@@ -111,7 +111,7 @@ public class EliminateCandidatesTests
             { 9, 1, 2,   3, 4, 5,   6, 7, 8 },
         };
         Cell[,] createdCellMatrix = MatrixFactory.CreateMatrix(intMatrix);
-        Puzzle puzzle = Puzzle.Create(createdCellMatrix, superImposeMatrix);
+        Puzzle puzzle = Puzzle.Create(intMatrix, superImposeMatrix);
         /* Combined, for reference:
         [ 1 2 5 ]  [ 4 4 6 ]  [ 7 8 9 ]
         [ 4 5 3 ]  [ 7 8 2 ]  [ 1 2 3 ]
@@ -184,7 +184,7 @@ public class EliminateCandidatesTests
             { 9, 1, 2,   3, 4, 5,   6, 7, 8 },
         };
         Cell[,] createdCellMatrix = MatrixFactory.CreateMatrix(intMatrix);
-        Puzzle puzzle = Puzzle.Create(createdCellMatrix, superImposeMatrix);
+        Puzzle puzzle = Puzzle.Create(intMatrix, superImposeMatrix);
         /* Combined, for reference:
         [ 1 2 5 ]  [ 4 4 6 ]  [ 7 8 9 ]
         [ 4 5 3 ]  [ 7 8 2 ]  [ 1 2 3 ]
@@ -267,15 +267,14 @@ public class EliminateCandidatesTests
             { 0, 0, 0,   0, 1, 0,   0, 0, 0 },
             { 0, 0, 0,   0, 0, 0,   0, 0, 0 },
         };
-        Cell[,] createdCellMatrix = MatrixFactory.CreateMatrix(givenMatrix);
-        Puzzle puzzle = Puzzle.Create(createdCellMatrix);
+        Puzzle puzzle = Puzzle.Create(givenMatrix);
 
         // Act
         puzzle.RemoveCandidates();
 
         // Assert:
 
-        ConsoleRender.RenderMatrixCellValuesV3(puzzle);
+        ConsoleRender.RenderMatrix(puzzle);
 
         // coord [4,4] will not have 1, 2, 3, 4, 5, or 7 as candidates
         Assert.AreEqual(6, puzzle.Matrix[4, 4].Values[6]);  // control

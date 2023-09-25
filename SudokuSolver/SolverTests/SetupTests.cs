@@ -125,10 +125,9 @@ public class SetupTests
             { 6, 7, 8,   9, 1, 2,   3, 4, 5 },
             { 9, 1, 2,   3, 4, 5,   6, 7, 8 },
         };
-        Cell[,] createdCellMatrix = MatrixFactory.CreateMatrix(intMatrix);
 
         // Act
-        Puzzle puzzle = Puzzle.Create(createdCellMatrix, superImposeMatrix);
+        Puzzle puzzle = Puzzle.Create(intMatrix, superImposeMatrix);
 
         // Assert
         Assert.AreEqual(ValueStatus.Given, puzzle.Matrix[0, 2].ValueStatus);
@@ -167,10 +166,9 @@ public class SetupTests
             { 6, 7, 8,   9, 1, 2,   3, 4, 5 },
             { 9, 1, 2,   3, 4, 5,   6, 7, 8 },
         };
-        Cell[,] createdCellMatrix = MatrixFactory.CreateMatrix(intMatrix);
 
         // Act
-        Puzzle puzzle = Puzzle.Create(createdCellMatrix, superImposeMatrix);
+        Puzzle puzzle = Puzzle.Create(intMatrix, superImposeMatrix);
 
         // Assert
         Assert.AreEqual(5, puzzle.Matrix[0, 2].Values[0]);  // given (control)
@@ -211,10 +209,9 @@ public class SetupTests
             { 6, 7, 8,   9, 1, 2,   3, 4, 5 },
             { 9, 1, 2,   3, 4, 5,   6, 7, 8 },
         };
-        Cell[,] createdCellMatrix = MatrixFactory.CreateMatrix(intMatrix);
 
         // Act
-        Puzzle puzzle = Puzzle.Create(createdCellMatrix, superImposeMatrix);
+        Puzzle puzzle = Puzzle.Create(intMatrix, superImposeMatrix);
 
         // Assert
         Assert.AreEqual(ValueStatus.Given, puzzle.Matrix[0, 2].ValueStatus);  // given (control)
@@ -242,8 +239,7 @@ public class SetupTests
             { 0, 0, 0,   9, 0, 0,   1, 0, 0 },
             { 0, 8, 0,   0, 5, 0,   6, 0, 0 },
         };
-        Cell[,] createdCellMatrix = MatrixFactory.CreateMatrix(intMatrix);
-        Puzzle puzzle = Puzzle.Create(createdCellMatrix);
+        Puzzle puzzle = Puzzle.Create(intMatrix);
 
         // Act
         int[] actual = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -279,10 +275,9 @@ public class SetupTests
             { 0, 0, 0,   9, 0, 0,   1, 0, 0 },
             { 0, 8, 0,   0, 5, 0,   6, 0, 0 },
         };
-        Cell[,] createdCellMatrix = MatrixFactory.CreateMatrix(intMatrix);
 
         // Act
-        Puzzle puzzle = Puzzle.Create(createdCellMatrix);
+        Puzzle puzzle = Puzzle.Create(intMatrix);
 
         // Assert
         Assert.AreEqual(5, puzzle.Cells[4].Id);

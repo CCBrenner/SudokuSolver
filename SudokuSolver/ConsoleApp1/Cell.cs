@@ -107,6 +107,12 @@ public class Cell
 
         return Values[0];
     }
+    public int SetExpectedValueAsPlayback(Txn txn)
+    {
+        Values[txn.IndexOfValue] = txn.New;
+        return Values[txn.IndexOfValue];
+    }
+
     public int ReconcileValueWithCandidates()
     {
         if (ValueStatus == ValueStatus.Given || ValueStatus == ValueStatus.Confirmed || Values[Values[0]] != NON_POSSIBILITY_PLACEHOLDER_VALUE)

@@ -37,8 +37,7 @@ public class GenericTests
             { 6, 7, 8,   9, 1, 2,   3, 4, 5 },
             { 9, 1, 2,   3, 4, 5,   6, 7, 8 },
         };
-        Cell[,] createdCellMatrix = MatrixFactory.CreateMatrix(givenMatrix);
-        Puzzle puzzle = Puzzle.Create(createdCellMatrix, superImposeMatrix);
+        Puzzle puzzle = Puzzle.Create(givenMatrix, superImposeMatrix);
 
         puzzle.RemoveCandidates();
         Assert.AreEqual(0, puzzle.Matrix[4, 8].Values[7]);  // 7 is value to test w/these coordinates
@@ -83,8 +82,7 @@ public class GenericTests
             { 6, 7, 8,   9, 1, 2,   3, 4, 5 },
             { 9, 1, 2,   3, 4, 5,   6, 7, 8 },
         };
-        Cell[,] createdCellMatrix = MatrixFactory.CreateMatrix(givenMatrix);
-        Puzzle puzzle = Puzzle.Create(createdCellMatrix, superImposeMatrix);
+        Puzzle puzzle = Puzzle.Create(givenMatrix, superImposeMatrix);
         puzzle.RemoveCandidates();
 
         // Act
@@ -121,8 +119,7 @@ public class GenericTests
             { 0, 0, 0,   0, 0, 0,   0, 0, 0 },
             { 0, 0, 0,   0, 0, 0,   0, 0, 0 },
         };
-        Cell[,] createdCellMatrix = MatrixFactory.CreateMatrix(givenMatrix);
-        Puzzle puzzle = Puzzle.Create(createdCellMatrix);
+        Puzzle puzzle = Puzzle.Create(givenMatrix);
         puzzle.RemoveCandidates();
 
         // Act
@@ -151,8 +148,7 @@ public class GenericTests
             { 0, 0, 0, 9, 0, 0, 1, 0, 0 },
             { 0, 8, 0, 0, 5, 0, 6, 0, 0 },
         };
-        Cell[,] createdCellMatrix = MatrixFactory.CreateMatrix(matrix33);
-        Puzzle puzzle = Puzzle.Create(createdCellMatrix);
+        Puzzle puzzle = Puzzle.Create(matrix33);
 
         // Act
         puzzle.RemoveCandidates();
@@ -184,15 +180,14 @@ public class GenericTests
             { 0, 8, 0,   0, 0, 0,   0, 0, 0 },
             { 1, 0, 3,   7, 0, 0,   2, 0, 0 },
         };
-        Cell[,] matrix = MatrixFactory.CreateMatrix(startingMatrix);
-        Puzzle puzzle = Puzzle.Create(matrix);
+        Puzzle puzzle = Puzzle.Create(startingMatrix);
         BruteForceSolver solver = new BruteForceSolver(puzzle);
 
         // Act
         bool actualPuzzleWasSolved = solver.Solve();
 
         // Assert
-        ConsoleRender.RenderMatrixCellValuesV3(puzzle);
+        ConsoleRender.RenderMatrix(puzzle);
         Assert.IsTrue(actualPuzzleWasSolved);
         Assert.AreEqual(5, puzzle.Matrix[8, 8].Values[0]);
         Assert.AreEqual(4, puzzle.Matrix[4, 4].Values[0]);

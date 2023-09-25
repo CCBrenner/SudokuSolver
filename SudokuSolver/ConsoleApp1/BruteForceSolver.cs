@@ -2,9 +2,9 @@
 
 namespace SudokuSolver;
 
-public class BruteForceSolver
+public class BruteForceSolver : ISolver
 {
-	public BruteForceSolver(Puzzle puzzle)
+	private BruteForceSolver(Puzzle puzzle)
     {
         this.puzzle = puzzle;
 
@@ -24,24 +24,28 @@ public class BruteForceSolver
         PuzzleIsSolvable = true;
         StopwatchTime = 0;
 
-        timer = new(100);  // every tenth of a second
+        Timer = new(100);  // every tenth of a second
         SetupTimer();
     }
 
     private Puzzle puzzle;
-    private System.Timers.Timer timer;
+    public System.Timers.Timer Timer { get; private set; }
     public Cell CurrentCell { get; private set; }
 	public Stack<Cell> RemainingCells { get; private set; }
 	public Stack<Cell> PreviousCells { get; private set; }
     public bool PuzzleIsSolvable { get; private set; }
     public decimal StopwatchTime { get; private set; }
 
+    public static BruteForceSolver Create(Puzzle puzzle) => new(puzzle);
+
     public bool Solve()
     {
-        timer.Start();
+        Timer.Start();
 
         int loopCounter = 1;
         int candidate;
+
+        puzzle.RemoveCandidates();
 
         while (true)
         {
@@ -79,7 +83,7 @@ public class BruteForceSolver
             GoToNextCell();
         }
 
-        timer.Stop();
+        Timer.Stop();
 
         // return true if puzzle is solved; false if could not be solved
         return PuzzleIsSolvable;
@@ -87,7 +91,7 @@ public class BruteForceSolver
 
     private void SetupTimer()
     {
-        timer.Elapsed += TimerElapsed;
+        Timer.Elapsed += TimerElapsed;
     }
 
     private void TimerElapsed(object? sender, ElapsedEventArgs e)

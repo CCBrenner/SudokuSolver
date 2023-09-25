@@ -276,7 +276,7 @@ while (true)
 
         puzzle.RemoveUnconfirmedValuesThatDoNotHaveRespectiveCandidate();
 
-        ConsoleRender.RenderMatrixCellValuesV2(puzzle);
+        ConsoleRender.RenderMatrixWithMetaData(puzzle);
      
         Console.ReadLine();
         */

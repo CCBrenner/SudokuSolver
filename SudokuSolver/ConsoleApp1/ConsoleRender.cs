@@ -1,45 +1,38 @@
-﻿using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
-
-namespace SudokuSolver;
+﻿namespace SudokuSolver;
 
 public class ConsoleRender
 {
     public static void RenderMatrix(Puzzle puzzle)
     {
-        string matrixRender = string.Empty;
+        string row = string.Empty;
 
         for (int i = 0; i < 9; i++)
         {
-            matrixRender += $"[ {ValueRender(puzzle, i, 0)} ][ {ValueRender(puzzle, i, 1)} ][ {ValueRender(puzzle, i, 2)} ]  " +
-                            $"[ {ValueRender(puzzle, i, 3)} ][ {ValueRender(puzzle, i, 4)} ][ {ValueRender(puzzle, i, 5)} ]  " +
-                            $"[ {ValueRender(puzzle, i, 6)} ][ {ValueRender(puzzle, i, 7)} ][ {ValueRender(puzzle, i, 8)} ]\n";
-            if (i % 3 == 2 && i != 8)
-                matrixRender += "\n";
-        }
-
-        Console.Write(matrixRender);
-    }
-    private static string ValueRender(Puzzle puzzle, int rowId, int colId)
-    {
-        int value = puzzle.Matrix[rowId, colId].Values[0];
-        return value == 0 ? " " : value.ToString();
-    }
-    public static void RenderMatrixCellValuesV1(Puzzle puzzle)
-    {
-        for (int i = 0; i < 9; i++)
-        {
-            if (i % 3 == 0 && i != 0)
-            {
-                Console.WriteLine();
-            }
-            string row = $"[   {puzzle.Matrix[i, 0].GetAllValues()} {puzzle.Matrix[i, 1].GetAllValues()} {puzzle.Matrix[i, 2].GetAllValues()} ] [ " +
-                         $"  {puzzle.Matrix[i, 3].GetAllValues()} {puzzle.Matrix[i, 4].GetAllValues()} {puzzle.Matrix[i, 5].GetAllValues()} ] [ " +
-                         $"  {puzzle.Matrix[i, 6].GetAllValues()} {puzzle.Matrix[i, 7].GetAllValues()} {puzzle.Matrix[i, 8].GetAllValues()} ]\n";
+            row = $"[ {puzzle.Matrix[i, 0].Values[0]} {puzzle.Matrix[i, 1].Values[0]} {puzzle.Matrix[i, 2].Values[0]} ]  " +
+                  $"[ {puzzle.Matrix[i, 3].Values[0]} {puzzle.Matrix[i, 4].Values[0]} {puzzle.Matrix[i, 5].Values[0]} ]  " +
+                  $"[ {puzzle.Matrix[i, 6].Values[0]} {puzzle.Matrix[i, 7].Values[0]} {puzzle.Matrix[i, 8].Values[0]} ]\n";
             Console.Write(row);
+
+            if (i % 3 == 2)
+                Console.WriteLine();
         }
     }
-    public static void RenderMatrixCellValuesV2(Puzzle puzzle)
+    public static void RenderMatrix(List<Cell> cells)
+    {
+        string row = string.Empty;
+
+        for (int i = 0; i < 9; i++)
+        {
+            row = $"[ {cells[9 * i].Values[0]} {cells[1 + (9 * i)].Values[0]} {cells[2+(9 * i)].Values[0]} ]  " +
+                  $"[ {cells[3 + (9 * i)].Values[0]} {cells[4 + (9 * i)].Values[0]} {cells[5 + (9 * i)].Values[0]} ]  " +
+                  $"[ {cells[6 + (9 * i)].Values[0]} {cells[7 + (9 * i)].Values[0]} {cells[8 + (9 * i)].Values[0]} ]\n";
+            Console.Write(row);
+
+            if (i % 3 == 2)
+                Console.WriteLine();
+        }
+    }
+    public static void RenderMatrixWithMetaData(Puzzle puzzle)
     {
         string row = $"            " +
             $"  {FormatCandidates(puzzle.Columns[0].Candidates)}  {FormatCandidates(puzzle.Columns[1].Candidates)}  {FormatCandidates(puzzle.Columns[2].Candidates)}    " +
@@ -60,26 +53,11 @@ public class ConsoleRender
             {
                 string tenSpaces = "          ";
                 row = $"{tenSpaces}  " +
-                    $"    {tenSpaces}{{{FormatCandidates(puzzle.Blocks[i-2].Candidates)}}}{tenSpaces}" +
-                    $"{tenSpaces}{tenSpaces}{{{FormatCandidates(puzzle.Blocks[i-1].Candidates)}}}{tenSpaces}" +
+                    $"    {tenSpaces}{{{FormatCandidates(puzzle.Blocks[i - 2].Candidates)}}}{tenSpaces}" +
+                    $"{tenSpaces}{tenSpaces}{{{FormatCandidates(puzzle.Blocks[i - 1].Candidates)}}}{tenSpaces}" +
                     $"{tenSpaces}{tenSpaces}{{{FormatCandidates(puzzle.Blocks[i].Candidates)}}}{tenSpaces}\n\n";
                 Console.Write(row);
             }
-        }
-    }
-    public static void RenderMatrixCellValuesV3(Puzzle puzzle)
-    {
-        string row = string.Empty;
-
-        for (int i = 0; i < 9; i++)
-        {
-            row = $"[ {puzzle.Matrix[i, 0].Values[0]} {puzzle.Matrix[i, 1].Values[0]} {puzzle.Matrix[i, 2].Values[0]} ]  " +
-                  $"[ {puzzle.Matrix[i, 3].Values[0]} {puzzle.Matrix[i, 4].Values[0]} {puzzle.Matrix[i, 5].Values[0]} ]  " +
-                  $"[ {puzzle.Matrix[i, 6].Values[0]} {puzzle.Matrix[i, 7].Values[0]} {puzzle.Matrix[i, 8].Values[0]} ]\n";
-            Console.Write(row);
-
-            if (i % 3 == 2)
-                Console.WriteLine();
         }
     }
 
@@ -157,5 +135,23 @@ public class ConsoleRender
             }
         }
         Console.WriteLine($"Total Results: {count}");
+    }
+
+    internal static void RenderStandardTxnInfo(TxnLedger ledger, ISolver solver)
+    {
+        // Print the transactions
+        Console.WriteLine($"Number of Txns in Ledger: {ledger.Txns.Count:N0}");
+        Console.WriteLine($"Number of ValueTxns: {ledger.ValueTxns.Count:N0}");
+        Console.WriteLine($"Number of CandidateTxns: {ledger.CandidateTxns.Count:N0}\n");
+
+        // Print proportions
+        decimal valueTxnsCount = ledger.ValueTxns.Count;
+        decimal txnsCount = ledger.Txns.Count;
+        Console.WriteLine($"ValueTxns % of Txns: {valueTxnsCount / txnsCount:P}\n");
+
+        // Print rates
+        Console.WriteLine($"Txns/second: {ledger.Txns.Count / solver.StopwatchTime:N1}");
+        Console.WriteLine($"ValueTxns/second: {ledger.ValueTxns.Count / solver.StopwatchTime:N1}");
+        Console.WriteLine($"CandidateTxns/second: {ledger.CandidateTxns.Count / solver.StopwatchTime:N1}\n");
     }
 }

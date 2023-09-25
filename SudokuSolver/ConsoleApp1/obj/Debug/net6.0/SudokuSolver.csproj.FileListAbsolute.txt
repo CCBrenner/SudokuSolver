@@ -73,3 +73,17 @@ C:\Users\Collyn B - VotP\Desktop\Professional\Software Engineering\projects\gh_c
 C:\Users\Collyn B - VotP\Desktop\Professional\Software Engineering\projects\gh_clone_hosting\SudokuSolver\SudokuSolver\ConsoleApp1\bin\Debug\net6.0\SudokuSolver.pdb
 C:\Users\Collyn B - VotP\Desktop\Professional\Software Engineering\projects\gh_clone_hosting\SudokuSolver\SudokuSolver\ConsoleApp1\obj\Debug\net6.0\SudokuSolver.genruntimeconfig.cache
 C:\Users\Collyn B - VotP\Desktop\Professional\Software Engineering\projects\gh_clone_hosting\SudokuSolver\SudokuSolver\ConsoleApp1\obj\Debug\net6.0\ref\SudokuSolver.dll
+C:\Users\colly_cp7sy9h\Desktop\projects\gh_clone_hosting\SudokuSolver\SudokuSolver\ConsoleApp1\bin\Debug\net6.0\SudokuSolver.exe
+C:\Users\colly_cp7sy9h\Desktop\projects\gh_clone_hosting\SudokuSolver\SudokuSolver\ConsoleApp1\bin\Debug\net6.0\SudokuSolver.deps.json
+C:\Users\colly_cp7sy9h\Desktop\projects\gh_clone_hosting\SudokuSolver\SudokuSolver\ConsoleApp1\bin\Debug\net6.0\SudokuSolver.runtimeconfig.json
+C:\Users\colly_cp7sy9h\Desktop\projects\gh_clone_hosting\SudokuSolver\SudokuSolver\ConsoleApp1\bin\Debug\net6.0\SudokuSolver.dll
+C:\Users\colly_cp7sy9h\Desktop\projects\gh_clone_hosting\SudokuSolver\SudokuSolver\ConsoleApp1\bin\Debug\net6.0\SudokuSolver.pdb
+C:\Users\colly_cp7sy9h\Desktop\projects\gh_clone_hosting\SudokuSolver\SudokuSolver\ConsoleApp1\obj\Debug\net6.0\SudokuSolver.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\colly_cp7sy9h\Desktop\projects\gh_clone_hosting\SudokuSolver\SudokuSolver\ConsoleApp1\obj\Debug\net6.0\SudokuSolver.AssemblyInfoInputs.cache
+C:\Users\colly_cp7sy9h\Desktop\projects\gh_clone_hosting\SudokuSolver\SudokuSolver\ConsoleApp1\obj\Debug\net6.0\SudokuSolver.AssemblyInfo.cs
+C:\Users\colly_cp7sy9h\Desktop\projects\gh_clone_hosting\SudokuSolver\SudokuSolver\ConsoleApp1\obj\Debug\net6.0\SudokuSolver.csproj.CoreCompileInputs.cache
+C:\Users\colly_cp7sy9h\Desktop\projects\gh_clone_hosting\SudokuSolver\SudokuSolver\ConsoleApp1\obj\Debug\net6.0\SudokuSolver.dll
+C:\Users\colly_cp7sy9h\Desktop\projects\gh_clone_hosting\SudokuSolver\SudokuSolver\ConsoleApp1\obj\Debug\net6.0\refint\SudokuSolver.dll
+C:\Users\colly_cp7sy9h\Desktop\projects\gh_clone_hosting\SudokuSolver\SudokuSolver\ConsoleApp1\obj\Debug\net6.0\SudokuSolver.pdb
+C:\Users\colly_cp7sy9h\Desktop\projects\gh_clone_hosting\SudokuSolver\SudokuSolver\ConsoleApp1\obj\Debug\net6.0\SudokuSolver.genruntimeconfig.cache
+C:\Users\colly_cp7sy9h\Desktop\projects\gh_clone_hosting\SudokuSolver\SudokuSolver\ConsoleApp1\obj\Debug\net6.0\ref\SudokuSolver.dll

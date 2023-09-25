@@ -2,9 +2,11 @@
 
 public class Puzzle
 {
-    private Puzzle(Cell[,] puzzleMatrix, List<Cell> cells, List<Row> rows, List<Column> columns, List<Block> blocks, List<BlockRow> blockRows, List<BlockColumn> blockClumns, TxnLedger ledger)
+    private Puzzle(Cell[,] puzzleMatrix, int[,] startingMatrix, int[,] matrixToSuperimpose, List<Cell> cells, List<Row> rows, List<Column> columns, List<Block> blocks, List<BlockRow> blockRows, List<BlockColumn> blockClumns, TxnLedger ledger)
     {
         Matrix = puzzleMatrix;
+        StartingIntMatrix = startingMatrix;
+        StartingIntMatrixToSuperimpose = matrixToSuperimpose;
         Cells = cells;
         Rows = rows;
         Columns = columns;
@@ -22,6 +24,8 @@ public class Puzzle
     public List<BlockRow> BlockRows { get; private set; }
     public List<BlockColumn> BlockClumns { get; private set; }
     public TxnLedger Ledger { get; }
+    public int[,] StartingIntMatrix { get; }
+    public int[,] StartingIntMatrixToSuperimpose { get; }
 
     public bool NoExpectedCellValuesInCells => GetNoExpectedCellValuesInCells();
 
@@ -31,26 +35,29 @@ public class Puzzle
 
     public Cell CurrentCell { get; private set; }
 
-    public static Puzzle Create(Cell[,] startingMatrix)
+    public static Puzzle Create(int[,] startingMatrix)
     {
         int[,] blankMatrix = MatrixFactory.GetBlankMatrix();
         return Create(startingMatrix, blankMatrix, new TxnLedger());
     }
-    public static Puzzle Create(Cell[,] startingMatrix, TxnLedger ledger)
+    public static Puzzle Create(int[,] startingMatrix, TxnLedger ledger)
     {
         int[,] blankMatrix = MatrixFactory.GetBlankMatrix();
         return Create(startingMatrix, blankMatrix, ledger);
     }
-    public static Puzzle Create(Cell[,] startingMatrix, int[,] matrixToSuperimpose)
+    public static Puzzle Create(int[,] startingMatrix, int[,] matrixToSuperimpose)
     {
         return Create(startingMatrix, matrixToSuperimpose, new TxnLedger());
     }
-    public static Puzzle Create(Cell[,] startingMatrix, int[,] matrixToSuperimpose, TxnLedger ledger)
+    public static Puzzle Create(int[,] startingMatrix, int[,] matrixToSuperimpose, TxnLedger ledger)
     {
-        // Create Matrix of cells through proess of superimposition
-        Cell[,] compositionMatrix = SuperimposeNonGivenCellValues(startingMatrix, matrixToSuperimpose);
+        // Create matrix of cells instead of ints from starting point
+        Cell[,] matrix = MatrixFactory.CreateMatrix(startingMatrix);
 
-        // Create list of refernces to cells of previously created matrix
+        // Create Matrix of cells through process of superimposition
+        Cell[,] compositionMatrix = SuperimposeNonGivenCellValues(matrix, matrixToSuperimpose);
+
+        // Create list of references to cells of previously created matrix
         List<Cell> cells = Cell.CreateListFromCellReferencesOfMatrix(compositionMatrix);
 
         // Create rows array of cell references from cells list (one-to-many relationships)
@@ -74,10 +81,16 @@ public class Puzzle
         BlockColumn.AssignBlockColumnReferenceToBlocksPerBlockColumn(blockColumns);
 
         // Inject and create new puzzle
-        Puzzle puzzle = new(compositionMatrix, cells, rows, columns, blocks, blockRows, blockColumns, ledger);
+        Puzzle puzzle = new(compositionMatrix, startingMatrix, matrixToSuperimpose, cells, rows, columns, blocks, blockRows, blockColumns, ledger);
         puzzle.AssignPuzzleReferenceToCells();
+        puzzle.AssignPuzzleReferenceToLedger();
 
         return puzzle;
+    }
+
+    private void AssignPuzzleReferenceToLedger()
+    {
+        Ledger.AssignPuzzleReference(this);
     }
 
     public void RemoveUnconfirmedValuesThatDoNotHaveRespectiveCandidate()
@@ -135,7 +148,7 @@ public class Puzzle
         }
     }
 
-    private static Cell[,] SuperimposeNonGivenCellValues(Cell[,] compositionMatrix, int[,] matrixToSuperimpose)
+    public static Cell[,] SuperimposeNonGivenCellValues(Cell[,] compositionMatrix, int[,] matrixToSuperimpose)
     {
         for (int i = 0; i < 9; i++)
         {
