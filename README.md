@@ -1,0 +1,7 @@
+# SudokuSolver
+
+This project has gone beyond what is seen here. To view what this project has become, go over & see my Professional Website repo (see that repo's work fro reference; it incorporates a Razor component UI).
+
+SudokuSolver solves sudoku puzzles fed to it using a brute force algorithm that steps forward when the value of the current cell allows for a possible solve, and steps back to where such a state is achievable again once it comes upon a scenario where the puzzle can no longer be solved. The program incorporates a lot of relationship setup to make access to the relevant puzzle cells simple from a method point of view. It is a very modularized puzzle (done in an effort to keep complexity minimized, which was shown to be an overprecaution but was still educational nonetheless.
+
+This project was fun to make due to combining two things that I like: programming and solving puzzles (in this case a Sudoku puzzle). While I did originally try to make a program that solved Sudoku puzzles the way I personally know how to the fastest as a person, this proved to be rather complicated for a program that does not have the same visual ability to deduce best potential locations for a new "lead" toward finding even more leads. Brute force methodology was much more in the wheelhouse of software, and this became very apparent to me over the course of this project. It taught me to evaluate how many resources and at what speed a program actually uses and performs at. I learned to use real measurements to frame my perspective to make it more accurate.
