@@ -181,7 +181,7 @@ public class GenericTests
             { 1, 0, 3,   7, 0, 0,   2, 0, 0 },
         };
         Puzzle puzzle = Puzzle.Create(startingMatrix);
-        BruteForceSolver solver = new BruteForceSolver(puzzle);
+        BruteForceSolver solver = BruteForceSolver.Create(puzzle);
 
         // Act
         bool actualPuzzleWasSolved = solver.Solve();

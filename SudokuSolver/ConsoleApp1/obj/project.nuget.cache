@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3Y5x4Hn4dl2kznNHvvJbTrqDGhD+Kehe60z0gockPMtoQvH+hybXJlHqV4UdgOBw8n5JZuLUqUl6ywKK8tu5uA==",
+  "dgSpecHash": "JYxN3npkpXA6Es1z0E4iqaEA/Erfp0HQ6pIYJm0mRoyLpbK9ccYB6znFoxxzIhGDbu2OZPqj7o2B4Vj9sKZypw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\colly_cp7sy9h\\Desktop\\projects\\gh_clone_hosting\\SudokuSolver\\SudokuSolver\\ConsoleApp1\\SudokuSolver.csproj",
+  "projectFilePath": "C:\\Users\\colly_cp7sy9h\\Desktop\\projects\\gh\\SudokuSolver_ConsoleVersion\\sudokusolver\\SudokuSolver\\ConsoleApp1\\SudokuSolver.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

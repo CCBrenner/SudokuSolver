@@ -59,7 +59,7 @@ public class PuzzleBook
             },
             // typically takes about 20 - 22 seconds to solve
             {
-                "random2",
+                "R2",
                 new int[9,9]
                 {
                     { 6, 0, 7,   1, 8, 0,   3, 0, 0 },

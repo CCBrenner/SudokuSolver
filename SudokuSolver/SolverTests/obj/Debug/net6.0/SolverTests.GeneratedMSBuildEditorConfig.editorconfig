@@ -8,4 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = SolverTests
-build_property.ProjectDir = C:\Users\colly_cp7sy9h\Desktop\projects\gh_clone_hosting\SudokuSolver\SudokuSolver\SolverTests\
+build_property.ProjectDir = C:\Users\colly_cp7sy9h\Desktop\projects\gh\SudokuSolver_ConsoleVersion\sudokusolver\SudokuSolver\SolverTests\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 

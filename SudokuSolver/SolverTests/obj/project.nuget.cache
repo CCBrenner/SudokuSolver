@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "HZzLXXe2cLORauiCpXvh9M65MN2WSkrj/kaQEWC5URWnzMIWE/hzU4VRH81KSw27dY8/f0AZMPqpd8kZRZOdVQ==",
+  "dgSpecHash": "oFYnMLciuiIhOQSIVIIB/gJRgOWk9lBwH+GA7soj/kgmW/ZHcTSakHXx5vOKCB29KYJ2BF3qBcLHUW5pGWoEMg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\colly_cp7sy9h\\Desktop\\projects\\gh_clone_hosting\\SudokuSolver\\SudokuSolver\\SolverTests\\SolverTests.csproj",
+  "projectFilePath": "C:\\Users\\colly_cp7sy9h\\Desktop\\projects\\gh\\SudokuSolver_ConsoleVersion\\sudokusolver\\SudokuSolver\\SolverTests\\SolverTests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\colly_cp7sy9h\\.nuget\\packages\\coverlet.collector\\3.1.2\\coverlet.collector.3.1.2.nupkg.sha512",
     "C:\\Users\\colly_cp7sy9h\\.nuget\\packages\\microsoft.codecoverage\\17.3.2\\microsoft.codecoverage.17.3.2.nupkg.sha512",
