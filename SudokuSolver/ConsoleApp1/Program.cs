@@ -11,6 +11,9 @@ class Program
         Puzzle puzzle = Puzzle.Create(matrix);
         var sudokuSolver = SudokuSolver.SudokuSolver.Create(puzzle);
 
+        // Test
+        ConsoleRender.RenderMatrixWithMetaData(puzzle);
+
         // Run
         sudokuSolver.PlayDefaultProgram();
     }

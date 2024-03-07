@@ -1,0 +1,15 @@
+C:\Users\colly_cp7sy9h\Desktop\projects\gh\SudokuSolver_ConsoleVersion\sudokusolver\SudokuSolver\SudokuSolverV2\bin\Debug\net6.0\SudokuSolverV2.exe
+C:\Users\colly_cp7sy9h\Desktop\projects\gh\SudokuSolver_ConsoleVersion\sudokusolver\SudokuSolver\SudokuSolverV2\bin\Debug\net6.0\SudokuSolverV2.deps.json
+C:\Users\colly_cp7sy9h\Desktop\projects\gh\SudokuSolver_ConsoleVersion\sudokusolver\SudokuSolver\SudokuSolverV2\bin\Debug\net6.0\SudokuSolverV2.runtimeconfig.json
+C:\Users\colly_cp7sy9h\Desktop\projects\gh\SudokuSolver_ConsoleVersion\sudokusolver\SudokuSolver\SudokuSolverV2\bin\Debug\net6.0\SudokuSolverV2.dll
+C:\Users\colly_cp7sy9h\Desktop\projects\gh\SudokuSolver_ConsoleVersion\sudokusolver\SudokuSolver\SudokuSolverV2\bin\Debug\net6.0\SudokuSolverV2.pdb
+C:\Users\colly_cp7sy9h\Desktop\projects\gh\SudokuSolver_ConsoleVersion\sudokusolver\SudokuSolver\SudokuSolverV2\obj\Debug\net6.0\SudokuSolverV2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\colly_cp7sy9h\Desktop\projects\gh\SudokuSolver_ConsoleVersion\sudokusolver\SudokuSolver\SudokuSolverV2\obj\Debug\net6.0\SudokuSolverV2.AssemblyInfoInputs.cache
+C:\Users\colly_cp7sy9h\Desktop\projects\gh\SudokuSolver_ConsoleVersion\sudokusolver\SudokuSolver\SudokuSolverV2\obj\Debug\net6.0\SudokuSolverV2.AssemblyInfo.cs
+C:\Users\colly_cp7sy9h\Desktop\projects\gh\SudokuSolver_ConsoleVersion\sudokusolver\SudokuSolver\SudokuSolverV2\obj\Debug\net6.0\SudokuSolverV2.csproj.CoreCompileInputs.cache
+C:\Users\colly_cp7sy9h\Desktop\projects\gh\SudokuSolver_ConsoleVersion\sudokusolver\SudokuSolver\SudokuSolverV2\obj\Debug\net6.0\SudokuSolverV2.sourcelink.json
+C:\Users\colly_cp7sy9h\Desktop\projects\gh\SudokuSolver_ConsoleVersion\sudokusolver\SudokuSolver\SudokuSolverV2\obj\Debug\net6.0\SudokuSolverV2.dll
+C:\Users\colly_cp7sy9h\Desktop\projects\gh\SudokuSolver_ConsoleVersion\sudokusolver\SudokuSolver\SudokuSolverV2\obj\Debug\net6.0\refint\SudokuSolverV2.dll
+C:\Users\colly_cp7sy9h\Desktop\projects\gh\SudokuSolver_ConsoleVersion\sudokusolver\SudokuSolver\SudokuSolverV2\obj\Debug\net6.0\SudokuSolverV2.pdb
+C:\Users\colly_cp7sy9h\Desktop\projects\gh\SudokuSolver_ConsoleVersion\sudokusolver\SudokuSolver\SudokuSolverV2\obj\Debug\net6.0\SudokuSolverV2.genruntimeconfig.cache
+C:\Users\colly_cp7sy9h\Desktop\projects\gh\SudokuSolver_ConsoleVersion\sudokusolver\SudokuSolver\SudokuSolverV2\obj\Debug\net6.0\ref\SudokuSolverV2.dll

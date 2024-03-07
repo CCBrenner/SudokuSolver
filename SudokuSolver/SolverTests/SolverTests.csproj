@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ConsoleApp1\SudokuSolver.csproj" />
+    <ProjectReference Include="..\SudokuSolverV2\SudokuSolverV2.csproj" />
   </ItemGroup>
 
 </Project>

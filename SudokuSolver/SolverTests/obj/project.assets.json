@@ -1911,6 +1911,16 @@
         "runtime": {
           "bin/placeholder/SudokuSolver.dll": {}
         }
+      },
+      "SudokuSolverV2/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/SudokuSolverV2.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SudokuSolverV2.dll": {}
+        }
       }
     }
   },
@@ -6776,6 +6786,11 @@
       "type": "project",
       "path": "../ConsoleApp1/SudokuSolver.csproj",
       "msbuildProject": "../ConsoleApp1/SudokuSolver.csproj"
+    },
+    "SudokuSolverV2/1.0.0": {
+      "type": "project",
+      "path": "../SudokuSolverV2/SudokuSolverV2.csproj",
+      "msbuildProject": "../SudokuSolverV2/SudokuSolverV2.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -6784,6 +6799,7 @@
       "MSTest.TestFramework >= 2.2.10",
       "Microsoft.NET.Test.Sdk >= 17.3.2",
       "SudokuSolver >= 1.0.0",
+      "SudokuSolverV2 >= 1.0.0",
       "coverlet.collector >= 3.1.2"
     ]
   },
@@ -6822,6 +6838,9 @@
           "projectReferences": {
             "C:\\Users\\colly_cp7sy9h\\Desktop\\projects\\gh\\SudokuSolver_ConsoleVersion\\sudokusolver\\SudokuSolver\\ConsoleApp1\\SudokuSolver.csproj": {
               "projectPath": "C:\\Users\\colly_cp7sy9h\\Desktop\\projects\\gh\\SudokuSolver_ConsoleVersion\\sudokusolver\\SudokuSolver\\ConsoleApp1\\SudokuSolver.csproj"
+            },
+            "C:\\Users\\colly_cp7sy9h\\Desktop\\projects\\gh\\SudokuSolver_ConsoleVersion\\sudokusolver\\SudokuSolver\\SudokuSolverV2\\SudokuSolverV2.csproj": {
+              "projectPath": "C:\\Users\\colly_cp7sy9h\\Desktop\\projects\\gh\\SudokuSolver_ConsoleVersion\\sudokusolver\\SudokuSolver\\SudokuSolverV2\\SudokuSolverV2.csproj"
             }
           }
         }

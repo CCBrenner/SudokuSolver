@@ -1,6 +1,6 @@
 ﻿using SudokuSolver;
 
-namespace SolverTests;
+namespace SolverTests.V1UnitTests;
 
 [TestClass]
 public class EliminateCandidatesTests
